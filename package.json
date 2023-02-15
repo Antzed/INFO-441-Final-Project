@@ -1,0 +1,20 @@
+{
+  "name": "info-441-final-project",
+  "version": "1.0.0",
+  "description": "game voting website",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Antzed/INFO-441-Final-Project.git"
+  },
+  "author": "Anthony Zhang, William Wang, Injae Shin, Matthew Khoo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Antzed/INFO-441-Final-Project/issues"
+  },
+  "homepage": "https://github.com/Antzed/INFO-441-Final-Project#readme"
+}
