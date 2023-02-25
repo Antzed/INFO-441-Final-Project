@@ -4,12 +4,13 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
+import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
 
 const appSettings = {
     appCredentials: {
-        clientId:  "Client ID HERE",
-        tenantId:  "Tenant ID (directory Id) here",
-        clientSecret:  "Client secret here"
+        clientId:  CLIENT_ID,
+        tenantId:  TENANT_ID,
+        clientSecret:  CLIENT_SECRET,
     },	
     authRoutes: {
         redirect: "http://localhost:3000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
@@ -18,10 +19,14 @@ const appSettings = {
     }
 };
 
+import usersRouter from './routes/users.js';
 
-var indexRouter = require('./routes/index');
-import usersRouter from './routes/users';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { ppid } from 'process';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 var app = express();
 
 app.use(logger('dev'));
@@ -41,7 +46,6 @@ app.use(sessions({
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.get('/signin', 
