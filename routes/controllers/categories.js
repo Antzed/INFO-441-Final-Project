@@ -5,7 +5,11 @@ var router = express.Router();
 router.get('/', async function(req, res, next) {
     // get the category name from mongoDB
     const categories = await req.models.Category.find({});
-    res.json(categories);
+    let categoryNames = [];
+    categories.forEach(category => {
+        categoryNames.push(category.name);
+    });
+    res.send(categoryNames);
 });
 
 
