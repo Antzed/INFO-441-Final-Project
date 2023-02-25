@@ -34,6 +34,25 @@ router.get('/', function(req, res, next) {
     });
 
 });
-// &search=grand%20theft%20auto%20v
+
+router.get('/imgs', function(req, res, next) {
+    options.url += '&search=' +  req.query.search.toLowerCase();
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+
+        //put the image linkes of the games into an array
+        let imgs = [];
+        let data = JSON.parse(body);
+        data.results.forEach(game => {
+            if (game.background_image) {
+                imgs.push(game.background_image);
+            }
+        });
+        console.log(imgs);
+        res.send(imgs);
+        options.url = 'https://rawg-video-games-database.p.rapidapi.com/games?key=' + RAWG_APIKEY;
+    });
+
+});
 
 export default router;
