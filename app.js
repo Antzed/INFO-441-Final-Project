@@ -6,6 +6,8 @@ import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
 import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
 
+import models from './models.js'
+
 import apiRouter from './routes/api.js';
 
 const appSettings = {
@@ -34,6 +36,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res, next) {
+    req.models = models;
+    next();
+});
 
 const oneDay = 1000 * 60 * 60 * 24
 app.use(sessions({
