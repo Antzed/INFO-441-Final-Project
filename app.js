@@ -6,6 +6,8 @@ import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
 import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
 
+import apiRouter from './routes/api.js';
+
 const appSettings = {
     appCredentials: {
         clientId:  CLIENT_ID,
@@ -18,8 +20,6 @@ const appSettings = {
         unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     }
 };
-
-import usersRouter from './routes/users.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -46,7 +46,7 @@ app.use(sessions({
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
 
-app.use('/users', usersRouter);
+app.use('/api', apiRouter);
 
 app.get('/signin', 
     msid.signIn({postLoginRedirect: '/'})
