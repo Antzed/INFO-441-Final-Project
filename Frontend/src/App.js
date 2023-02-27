@@ -7,7 +7,7 @@ import Background from './components/Background';
 
 function App() {
   return (
-    <div class="w-full h-full bg-gradient-to-b from-blue-400 to-blue-500">
+    <div class="w-full h-full bg-[#070452]">
       <Router>
         <Navbar/>
         <Routes>
