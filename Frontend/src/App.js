@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Navbar from './components/Navbar';
 import Background from './components/Background';
 
+
 function App() {
   return (
     <div className="w-full h-full relative overflow-hidden bg-dark-text">

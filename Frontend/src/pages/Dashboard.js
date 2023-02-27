@@ -7,11 +7,17 @@ function Dashboard() {
   const [showSearch, setShowSearch] = useState(false);
   console.log(showSearch);
   const [catagoryName, setCatagoryName] = useState("");
+  const [votes, setVotes] = useState([]);
   
   // everytime a vote is stored, get the votes
   useEffect(() => {
     console.log("get votes")
-  }, [])
+    fetch("http://localhost:3000/api/users/vote")
+    .then(res => {
+      let response = res.json()
+      setVotes(response)
+    })
+  }, [votes])
   
   
   return (
