@@ -1,17 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
+import Dashboard from './pages/Dashboard';
+import Navbar from './components/Navbar';
+import Background from './components/Background';
 
 function App() {
   return (
-    <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
-      <p className="text-3xl text-gray-700 font-bold mb-5">
-        Welcome!
-      </p>
-      <p className="text-gray-500 text-lg">
-        React and Tailwind CSS in action
-      </p>
+    <div class="w-full h-full bg-gradient-to-b from-blue-400 to-blue-500">
+      <Router>
+        <Navbar/>
+        <Routes>
+          {/* <Route path="/" element={<Landingpage/>}/> */}
+          <Route path="/" element={<Dashboard/>}/>
+        </Routes>
+        
+      </Router>
     </div>
   );
 }
