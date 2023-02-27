@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         'accent-orange': '#f7bc76',
         'dark-text': '#070452',
-        'small-text-01': '#636366'
+        'dark-grey': '#3A3A3C',
       }
     },
   },
