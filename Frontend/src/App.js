@@ -7,7 +7,7 @@ import Background from './components/Background';
 
 function App() {
   return (
-    <div class="w-full h-full bg-[#070452]">
+    <div className="w-full h-full relative overflow-hidden bg-dark-text">
       <Router>
         <Navbar/>
         <Routes>

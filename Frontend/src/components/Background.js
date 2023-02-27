@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function Background() {
     return(
-        <div class="w-full h-full bg-gradient-to-b from-blue-400 to-blue-500"/>
+        <div className="w-full h-full bg-gradient-to-b from-blue-400 to-blue-500"/>
     )
 }
 export default Background;

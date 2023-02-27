@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import Gamebox from '../components/Gamebox';
-// 
+import Gamebox from "../components/Gamebox";
+import GameSearch from "../components/GameSearch";
+//
 function Dashboard() {
-    return (
+  const [showSearch, setShowSearch] = useState(false);
+  console.log(showSearch);
+  const [catagoryName, setCatagoryName] = useState("");
+  
+  return (
+    <>
       <div
         className="h-screen w-screen relative flex flex-col justify-center items-center overflow-hidden"
         style={{
@@ -16,21 +22,51 @@ function Dashboard() {
           alt="asdf"
         />
         <div className="z-[2]">
-          <h1 class="text-white">Welcome to your Dashboard!</h1>
-          <div class="flex flex-col items-center">
-            <div class="flex flex-row space-x-12">
-              <Gamebox />
-              <Gamebox />
-              <Gamebox />
+          <h1 className="text-white">Welcome to your Dashboard!</h1>
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row space-x-12">
+              <Gamebox
+                setShowSearch={setShowSearch}
+                setCatagoryName={setCatagoryName}
+                catagoryName={"1GameOfTheYear"}
+              />
+              <Gamebox
+                setShowSearch={setShowSearch}
+                setCatagoryName={setCatagoryName}
+                catagoryName={"2GameOfTheYear"}
+              />
+              <Gamebox
+                setShowSearch={setShowSearch}
+                setCatagoryName={setCatagoryName}
+                catagoryName={"3GameOfTheYear"}
+              />
             </div>
-            <div class="flex flex-row space-x-12">
-              <Gamebox />
-              <Gamebox />
-              <Gamebox />
+            <div className="flex flex-row space-x-12">
+              <Gamebox
+                setShowSearch={setShowSearch}
+                setCatagoryName={setCatagoryName}
+                catagoryName={"4GameOfTheYear"}
+              />
+              <Gamebox
+                setShowSearch={setShowSearch}
+                setCatagoryName={setCatagoryName}
+                catagoryName={"5GameOfTheYear"}
+              />
+              <Gamebox
+                setShowSearch={setShowSearch}
+                setCatagoryName={setCatagoryName}
+                catagoryName={"6GameOfTheYear"}
+              />
             </div>
           </div>
         </div>
       </div>
-    );
+      {showSearch ? (
+        <GameSearch setShowSearch={setShowSearch} catagoryName={catagoryName} />
+      ) : (
+        <></>
+      )}
+    </>
+  );
 }
 export default Dashboard;
