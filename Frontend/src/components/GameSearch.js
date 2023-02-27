@@ -8,11 +8,17 @@ function GameSearch({ setShowSearch, catagoryName }) {
   //Search the game, Store the vote to backend, search need gameName(from here) + catagoryName(from gamebox) + catagoryID(find from DB)
   const[games, setGames] = useState([]);
 
+  // search games
   function handleSearch(e) {
     e.preventDefault();
     e.stopPropagation();
     alert("search " + e.target.searchText.value + " for " + catagoryName);
-    setGames(["game", "game2", "game3"])
+    setGames(["game1", "game2", "game3"])
+  }
+
+  // store the vote
+  function handleStore(gameName) {
+    alert("store Game: " + gameName + " for Catagory: " + catagoryName);
   }
 
   return (
@@ -37,7 +43,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
         </form>
         <div
           className={`resultList w-full max-h-[400px] gap-4 overflow-y-scroll`}>
-          {games.map((game) => { return <ResultItem name={game} />})}
+          {games.map((game) => { return <ResultItem onClick={() => handleStore(game)} gameName={game} />})}
         </div>
         <div
           className="cancelBtn border-2 border-white px-8 py-4 rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100"

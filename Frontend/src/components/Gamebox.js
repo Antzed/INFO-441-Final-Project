@@ -6,7 +6,7 @@ function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
 
   function handleAdd() {
     // add a game
-    //pass in current Catagory, then show search window
+    // pass in current Catagory, then show search window
     setCatagoryName(catagoryName);
     setShowSearch(true);
   }
