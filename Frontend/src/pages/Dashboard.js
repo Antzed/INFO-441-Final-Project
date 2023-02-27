@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Gamebox from "../components/Gamebox";
 import GameSearch from "../components/GameSearch";
@@ -7,6 +7,12 @@ function Dashboard() {
   const [showSearch, setShowSearch] = useState(false);
   console.log(showSearch);
   const [catagoryName, setCatagoryName] = useState("");
+  
+  // everytime a vote is stored, get the votes
+  useEffect(() => {
+    console.log("get votes")
+  }, [])
+  
   
   return (
     <>
