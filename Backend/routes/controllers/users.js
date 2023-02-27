@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
   } else {
     res.send('Error: You must be logged in');
   }
-  
 });
 
 

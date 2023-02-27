@@ -12,7 +12,7 @@ function Gamebox() {
   return (
     <div class="flex flex-col w-80 h-52 rounded-lg overflow-hidden my-6">
       <div class="flex w-full h-2/3 bg-dark-grey justify-center items-center">
-        <div onClick={store} className={`${hasImg ? "hidden" : ""}`}>
+        <div onClick={store} className={`${hasImg ? "hidden" : ""} cursor-pointer`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

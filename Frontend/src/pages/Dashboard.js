@@ -5,7 +5,7 @@ import Gamebox from '../components/Gamebox';
 function Dashboard() {
     return (
       <div
-        className="h-[100vh] flex flex-col justify-center items-center"
+        className="h-screen w-screen relative flex flex-col justify-center items-center overflow-hidden"
         style={{
           background:
             "linear-gradient(92.92deg, #1139CB -8.48%, #6B22A5 95.28%)",
@@ -15,7 +15,7 @@ function Dashboard() {
           src="/background.png"
           alt="asdf"
         />
-        <div className='z-[2]'>
+        <div className="z-[2]">
           <h1 class="text-white">Welcome to your Dashboard!</h1>
           <div class="flex flex-col items-center">
             <div class="flex flex-row space-x-12">
