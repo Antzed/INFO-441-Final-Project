@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www && cd Frontend && npm install && npm run build",
+    "watch": "nodemon ./bin/www",
+    "build": "cd Frontend && npm install && npm run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,6 +16,7 @@
     "microsoft-identity-express": "^1.0.0-beta",
     "mongoose": "^6.10.0",
     "morgan": "~1.9.1",
+    "nodemon": "^2.0.20",
     "request": "^2.88.2"
   }
 }

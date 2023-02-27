@@ -29,13 +29,17 @@ import { ppid } from 'process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
 var app = express();
 
+app.use(express.static(path.join(__dirname, 'Frontend/build')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+  
 
 app.use(function(req, res, next) {
     req.models = models;
@@ -70,4 +74,6 @@ app.get('/error', (req, res) => {
 app.get('/unauthorized', (req, res) => {
     res.status(401).send("Error: Unauthorized")
 })
+
+
 export default app;
