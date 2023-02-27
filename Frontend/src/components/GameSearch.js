@@ -10,7 +10,8 @@ function GameSearch({ setShowSearch, catagoryName }) {
 
   function handleSearch(e) {
     e.preventDefault();
-    alert("search for " + catagoryName);
+    e.stopPropagation();
+    alert("search " + e.target.searchText.value + " for " + catagoryName);
     setGames(["game", "game2", "game3"])
   }
 
