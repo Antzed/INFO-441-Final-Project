@@ -15,8 +15,10 @@ function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
   return (
     <div className="flex flex-col w-80 h-52 rounded-lg overflow-hidden my-6 shadow-xl">
       <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center">
+        
         {!hasGame ? (
           <div onClick={handleAdd} className="cursor-pointer">
+            {/* <img className="w-full, h-2/3" src="https://media.rawg.io/media/screenshots/bdb/bdb5db5a2e776533c8b3086338c8f314.jpg"></img> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

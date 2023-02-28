@@ -15,7 +15,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
     e.stopPropagation();
     // alert("search " + e.target.searchText.value + " for " + catagoryName);
     //fetch and get the list of games
-    fetch("http://localhost:9000/api/games?search=" + e.target.searchText.value) 
+    fetch("http://localhost:9000/api/games/?search=" + e.target.searchText.value) 
     // turn res into array
     .then(res => res.json())
     // set the array to games
@@ -31,7 +31,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
   // store the vote
   // TODO: get info from backend
   function handleStore(gameName) {
-    alert("store Game: " + gameName + " for Catagory: " + catagoryName);
+    // alert("store Game: " + gameName + " for Catagory: " + catagoryName);
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

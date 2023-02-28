@@ -8,7 +8,6 @@ function Dashboard() {
   console.log(showSearch);
   const [catagoryName, setCatagoryName] = useState("");
   const [votes, setVotes] = useState([]);
-  
   // everytime a vote is stored, get the votes
   useEffect(() => {
     console.log("get votes")

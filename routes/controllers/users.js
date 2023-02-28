@@ -3,7 +3,7 @@ import session from 'express-session';
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
   if(req.session.isAuthenticated){
     res.send(`
       responding with information about the user
@@ -22,11 +22,11 @@ router.post('/vote', async (req, res) => {
   try {
     if (req.session.isAuthenticated) {
       let user = await req.models.User.find({userName: req.session.account.username});
+      // let user = req.session.account.username;
 
       const newVote = new req.models.Vote({
-        categoryID: req.body.categoryId,
         categoryName: req.body.categoryName,
-        user: user._id,
+        user: user,
         game: req.body.game,
         date: Date.now(),
       });
@@ -47,7 +47,7 @@ router.get('/vote', async (req, res) => {
   try {
     if (req.session.isAuthenticated) {
       let user = await req.models.User.find({userName: req.session.account.username});
-      
+      // let username = req.session.account.username;
       // Check if user is in the database, if not add
       if (!user) {
         const newUser = new req.models.User({
@@ -58,7 +58,7 @@ router.get('/vote', async (req, res) => {
         user = await req.models.User.find({userName: req.session.account.username});
       }
 
-      let allVotes = await req.models.Vote.find({user: user._id});
+      let allVotes = await req.models.Vote.find({username});
 
       // May need to map this, will do later
       res.json(allVotes);

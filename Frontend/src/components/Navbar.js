@@ -1,23 +1,33 @@
 import React from 'react';
 import { useEffect, useState} from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate  } from 'react-router-dom';
 
 function Navbar() {
     const requestOptions = {
         method: 'GET',
         headers: { 
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
+            'Access-Control-Allow-Origin': 'http://localhost:9000',
             'Access-Control-Allow-Credentials': 'true',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
             'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-     },
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'responseType': 'json',
+        },
     };
+
     const [loggedIn, setLoggedin] = useState(false);
+
+    let navigate = useNavigate();
+    // let navigate = useNavigate();
     let handleLogin = () => {
-        console.log("logging in")
-        fetch("http://localhost:3000/signin", requestOptions)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        // redirect to https://localhost:3000/signin
+        console.log("logging in");
+        // redirect to https://localhost:9000/signin
+        navigate('/signin');
+
+        // console.log("logging in");
+        
     }
 
     let handleLogout = () => {
@@ -26,8 +36,9 @@ function Navbar() {
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
+
     useEffect(() => {
-        fetch("http://localhost:3000/api/session")
+        fetch("api/session")
         .then(res => {
             let response = res.json()
             if (response.isAuthenticated) {

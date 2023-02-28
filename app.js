@@ -5,6 +5,7 @@ import logger from 'morgan';
 import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
 import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
+import cors from 'cors'
 
 import models from './models.js'
 
@@ -17,7 +18,7 @@ const appSettings = {
         clientSecret:  CLIENT_SECRET,
     },	
     authRoutes: {
-        redirect: "http://localhost:3000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        redirect: "http://localhost:9000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
         error: "/error", // the wrapper will redirect to this route in case of any error.
         unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     }
@@ -32,19 +33,21 @@ const __dirname = dirname(__filename);
 
 var app = express();
 
-app.use(express.static(path.join(__dirname, 'Frontend/build')));
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'Frontend')));
 
-  
+
 
 app.use(function(req, res, next) {
     req.models = models;
     next();
 });
+
 
 const oneDay = 1000 * 60 * 60 * 24
 app.use(sessions({
@@ -57,9 +60,19 @@ app.use(sessions({
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
 
+// allow requests from http://localhost:3000
+const corsOptions = {
+    origin: 'http://localhost:3000/signin',
+    credentials: true,
+    respondType: 'application/json',
+    optionsSuccessStatus: 200
+};
+  
+
+
 app.use('/api', apiRouter);
 
-app.get('/signin', 
+app.get('/signin',
     msid.signIn({postLoginRedirect: '/'})
 )
 
