@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
+import cors from 'cors'
 import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
 import cors from 'cors'
 
@@ -40,7 +41,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'Frontend/build')));
-
 
 
 app.use(function(req, res, next) {
