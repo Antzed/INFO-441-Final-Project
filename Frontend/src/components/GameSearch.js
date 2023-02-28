@@ -5,11 +5,14 @@ import ResultItem from "./ResultItem";
 import GameImage from "./GameImage";
 
 
+
+
 function GameSearch({ setShowSearch, catagoryName }) {
   //Search the game, Store the vote to backend, search need gameName(from here) + catagoryName(from gamebox) + catagoryID(find from DB)
   const [selectedGame, setSelectedGame] = useState("");
   const[games, setGames] = useState([]);
   const [gameImages, setGameImages] = useState([]);
+  const [selectGameImage, setSelectGameImage] = useState("");
 
   // search games
 
@@ -17,6 +20,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
     e.preventDefault();
     e.stopPropagation();
     setGameImages([]);
+    setSelectedGame("");
     // alert("search " + e.target.searchText.value + " for " + catagoryName);
     //fetch and get the list of games
     fetch("http://localhost:9000/api/games/?search=" + e.target.searchText.value) 
@@ -33,11 +37,31 @@ function GameSearch({ setShowSearch, catagoryName }) {
   function handleGameClick(e) {
     //get the clicked game name
     let gameName = e.target.innerText
+    setSelectedGame(gameName);
     fetch(`http://localhost:9000/api/games/imgs?search=${gameName}`)
       .then(res => res.json())
       .then(data => setGameImages(data))
       .catch(err => console.log(err));
 
+  }
+
+  function handleImageClick(e) {
+    //get the clicked game name
+    let gameImage = e.target.src;
+    setSelectGameImage(gameImage);
+    console.log(gameImage);
+    //post the game image to backend
+    fetch("http://localhost:9000/api/games/save-chosen", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/text",
+      },
+      body: gameImage}
+    )
+
+
+
+    setShowSearch(false);
   }
 
 
@@ -96,8 +120,8 @@ function GameSearch({ setShowSearch, catagoryName }) {
             ))}
 
             {gameImages.length != 0 && gameImages.map((image, index) => (
-              <GameImage image={image} /> ))}
-          </div>
+              <GameImage image={image} alt={selectedGame} onClick={handleImageClick} /> ))}
+        </div>
           {/* {selectedGame && (
             <div className="gameImages flex flex-wrap gap-4">
               {gameImages.map((imageUrl, index) => (
