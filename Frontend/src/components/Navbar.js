@@ -24,7 +24,7 @@ function Navbar() {
         // redirect to https://localhost:3000/signin
         console.log("logging in");
         // redirect to https://localhost:9000/signin
-        navigate('/signin');
+        fetch('http://localhost:9000/signin')
 
         // console.log("logging in");
         

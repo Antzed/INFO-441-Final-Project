@@ -2,17 +2,21 @@ import React, {useEffect, useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ResultItem from "./ResultItem";
+import GameImage from "./GameImage";
 
 
 function GameSearch({ setShowSearch, catagoryName }) {
   //Search the game, Store the vote to backend, search need gameName(from here) + catagoryName(from gamebox) + catagoryID(find from DB)
+  const [selectedGame, setSelectedGame] = useState("");
   const[games, setGames] = useState([]);
+  const [gameImages, setGameImages] = useState([]);
 
   // search games
 
   function handleSearch(e) {
     e.preventDefault();
     e.stopPropagation();
+    setGameImages([]);
     // alert("search " + e.target.searchText.value + " for " + catagoryName);
     //fetch and get the list of games
     fetch("http://localhost:9000/api/games/?search=" + e.target.searchText.value) 
@@ -24,6 +28,16 @@ function GameSearch({ setShowSearch, catagoryName }) {
       setGames(data)
     })
     .catch(err => console.log(err));
+  }
+
+  function handleGameClick(e) {
+    //get the clicked game name
+    let gameName = e.target.innerText
+    fetch(`http://localhost:9000/api/games/imgs?search=${gameName}`)
+      .then(res => res.json())
+      .then(data => setGameImages(data))
+      .catch(err => console.log(err));
+
   }
 
 
@@ -70,12 +84,33 @@ function GameSearch({ setShowSearch, catagoryName }) {
         <div
           className={`resultList w-full max-h-[400px] gap-4 overflow-y-scroll`}>
             {/* print the games names out oneline at  time */}
-            {games.map((game, index) => (
+
+            {gameImages.length == 0 && games.map((game, index) => (
               <ResultItem
                 key={index}
                 gameName={game}
+                gameImages={gameImages}
+                onClick={handleGameClick}
+                
               />
             ))}
+
+            {gameImages.length != 0 && gameImages.map((image, index) => (
+              <GameImage image={image} /> ))}
+          </div>
+          {/* {selectedGame && (
+            <div className="gameImages flex flex-wrap gap-4">
+              {gameImages.map((imageUrl, index) => (
+                <div
+                  key={index}
+                  className="gameImage cursor-pointer"
+                  onClick={() => handleImageClick(imageUrl)}
+                >
+                  <img src={imageUrl} alt={`Image ${index}`} />
+                </div>
+              ))}
+            </div>
+            )} */}
           {/* {games.map((game) => { return <ResultItem onClick={() => handleStore(game)} gameName={game} />})} */}
         </div>
         <div
@@ -83,8 +118,8 @@ function GameSearch({ setShowSearch, catagoryName }) {
           onClick={() => setShowSearch(false)}>
           Cancel
         </div>
-      </div>
     </div>
+
   );
 }
 
