@@ -14,20 +14,21 @@ function Navbar() {
     };
     const [loggedIn, setLoggedin] = useState(false);
     let handleLogin = () => {
-        console.log("logging in")
-        fetch("http://localhost:3000/signin", requestOptions)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        window.location.href = "http://localhost:9000/signin"
+        //console.log("logging in")
+        //fetch("http://localhost:9000/signin", requestOptions)
+        //.then(res => console.log(res))
+        //.catch(err => console.log(err))
     }
 
     let handleLogout = () => {
         console.log("logging out")
-        fetch("http://localhost:3000/signout", requestOptions)
+        fetch("http://localhost:9000/signout", requestOptions)
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
     useEffect(() => {
-        fetch("http://localhost:3000/api/session")
+        fetch("http://localhost:9000/api/session")
         .then(res => {
             let response = res.json()
             if (response.isAuthenticated) {
