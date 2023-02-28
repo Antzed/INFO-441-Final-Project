@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ResultItem from "./ResultItem";
@@ -9,12 +9,24 @@ function GameSearch({ setShowSearch, catagoryName }) {
   const[games, setGames] = useState([]);
 
   // search games
+
   function handleSearch(e) {
     e.preventDefault();
     e.stopPropagation();
-    alert("search " + e.target.searchText.value + " for " + catagoryName);
-    setGames(["game1", "game2", "game3"])
+    // alert("search " + e.target.searchText.value + " for " + catagoryName);
+    //fetch and get the list of games
+    fetch("http://localhost:9000/api/games?search=" + e.target.searchText.value) 
+    // turn res into array
+    .then(res => res.json())
+    // set the array to games
+    .then(data => {
+      console.log(typeof(data));
+      setGames(data)
+    })
+    .catch(err => console.log(err));
   }
+
+
 
   // store the vote
   // TODO: get info from backend
@@ -57,7 +69,14 @@ function GameSearch({ setShowSearch, catagoryName }) {
         </form>
         <div
           className={`resultList w-full max-h-[400px] gap-4 overflow-y-scroll`}>
-          {games.map((game) => { return <ResultItem onClick={() => handleStore(game)} gameName={game} />})}
+            {/* print the games names out oneline at  time */}
+            {games.map((game, index) => (
+              <ResultItem
+                key={index}
+                gameName={game}
+              />
+            ))}
+          {/* {games.map((game) => { return <ResultItem onClick={() => handleStore(game)} gameName={game} />})} */}
         </div>
         <div
           className="cancelBtn border-2 border-white px-8 py-4 rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100"
