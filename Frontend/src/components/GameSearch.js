@@ -51,16 +51,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
     setSelectGameImage(gameImage);
     console.log(gameImage);
     //post the game image to backend
-    fetch("http://localhost:9000/api/games/save-chosen", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/text",
-      },
-      body: gameImage}
-    )
-
-
-
+    handleStore();
     setShowSearch(false);
   }
 
@@ -68,19 +59,18 @@ function GameSearch({ setShowSearch, catagoryName }) {
 
   // store the vote
   // TODO: get info from backend
-  function handleStore(gameName) {
+  function handleStore() {
     // alert("store Game: " + gameName + " for Catagory: " + catagoryName);
     const requestOptions = {
-      method: 'PUT',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
-        categoryID: 'categoryID',
-        categoryName: 'categoryName',
-        user: "userid",
-        game: "gamename" 
+        categoryName: "Game of the year",
+        gameTitle: selectedGame,
+        gameImageUrl: selectGameImage
       })
     };
-    fetch('http://localhost:3000/api/users/vote', requestOptions)
+    fetch('http://localhost:9000/api/users/vote', requestOptions)
     .then(response => response.json())
     .then(data => console.log(data));
   }

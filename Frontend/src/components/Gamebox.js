@@ -4,24 +4,6 @@ import React, {useState, useEffect} from "react";
 
 function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
   const [hasGame, setHasGame] = useState(false); // whether this catagory already got a game added
-  const [imageLink, setImageLink] = useState(""); // the image link of the game
-
-  // check if exportImage is empty using useEffect
-  useEffect(() => {
-    fetch("http://localhost:9000/api/games/get-chosen")
-    .then(res => res.text())
-    .then(data => {
-      setImageLink(data)})
-    .catch(err => console.log(err));
-  }, [imageLink])
-  // set hasGame to true if imageLink is not empty
-  useEffect(() => {
-    if (imageLink !== "") {
-      setHasGame(true);
-      
-    }
-  }, [imageLink])
-
 
 
   function handleAdd() {
@@ -38,7 +20,6 @@ function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
         
         {!hasGame ? (
           <div onClick={handleAdd} className="cursor-pointer">
-            <img className="w-full, h-2/3" src={imageLink}></img>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -52,11 +33,9 @@ function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
                 d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <img src={imageLink}></img>
           </div>
         ) : (
           <div>
-            <img className="w-full, h-2/3" src={imageLink}></img>
           </div>
         )}
       </div>

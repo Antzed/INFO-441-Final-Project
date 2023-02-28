@@ -38,8 +38,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.static(path.join(__dirname, 'Frontend')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'Frontend/build')));
 
 
 
@@ -59,14 +59,6 @@ app.use(sessions({
 
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
-
-// allow requests from http://localhost:3000
-const corsOptions = {
-    origin: 'http://localhost:3000/signin',
-    credentials: true,
-    respondType: 'application/json',
-    optionsSuccessStatus: 200
-};
   
 
 

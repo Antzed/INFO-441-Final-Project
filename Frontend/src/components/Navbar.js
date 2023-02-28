@@ -18,13 +18,11 @@ function Navbar() {
 
     const [loggedIn, setLoggedin] = useState(false);
 
-    let navigate = useNavigate();
-    // let navigate = useNavigate();
     let handleLogin = () => {
         // redirect to https://localhost:3000/signin
         console.log("logging in");
         // redirect to https://localhost:9000/signin
-        fetch('http://localhost:9000/signin')
+        window.location.href='http://localhost:9000/signin'
 
         // console.log("logging in");
         

@@ -21,13 +21,11 @@ router.get('/', async function(req, res, next) {
 router.post('/vote', async (req, res) => {
   try {
     if (req.session.isAuthenticated) {
-      let user = await req.models.User.find({userName: req.session.account.username});
-      // let user = req.session.account.username;
-
       const newVote = new req.models.Vote({
-        categoryName: req.body.categoryName,
-        user: user,
-        game: req.body.game,
+        categoryID: await req.models.Category.find({name: req.body.categoryName})._id,
+        userName: req.session.account.username,
+        gameTitle: req.body.gameTitle,
+        gameImageUrl: req.body.gameImageUrl,
         date: Date.now(),
       });
 

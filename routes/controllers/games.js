@@ -4,8 +4,6 @@ var router = express.Router();
 
 import { RAWG_APIKEY, X_RAPIDAPI_KEY } from '../../credentials.js';
 
-let theFuckingChosenOne = "";
-
 // rapid api options with a url variable
 let options = {
     method: 'GET',
@@ -55,16 +53,6 @@ router.get('/imgs', function(req, res, next) {
         options.url = 'https://rawg-video-games-database.p.rapidapi.com/games?key=' + RAWG_APIKEY;
     });
 
-});
-
-router.get('/get-chosen', function(req, res, next) {
-    res.send(theFuckingChosenOne)
-});
-
-router.post('/save-chosen', function(req, res, next) {
-    theFuckingChosenOne = req.body.chosen;
-    res.send(theFuckingChosenOne);
-    theFuckingChosenOne = "";
 });
 
 export default router;
