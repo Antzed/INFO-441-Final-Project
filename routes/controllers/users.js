@@ -4,15 +4,17 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-  if(req.session.isAuthenticated){
-    res.send(`
-      responding with information about the user
-      with the name: ${req.session.account.name}
-      and the username: ${req.session.account.username}
-    
-    `)
+  let thisSession = req.session;
+  if(thisSession.isAuthenticated){
+    res.json({
+      status: "loggedin",
+      userInfo: {
+          name: thisSession.account.name,
+          username: thisSession.account.username
+      }
+      });
   } else {
-    res.send('Error: You must be logged in');
+    res.json({ status: "loggedout" });
   }
 });
 

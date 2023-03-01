@@ -3,47 +3,29 @@ import { useEffect, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate  } from 'react-router-dom';
 
 function Navbar() {
-    const requestOptions = {
-        method: 'GET',
-        headers: { 
-            'Access-Control-Allow-Origin': 'http://localhost:9000',
-            'Access-Control-Allow-Credentials': 'true',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'responseType': 'json',
-        },
-    };
 
     const [loggedIn, setLoggedin] = useState(false);
 
     let handleLogin = () => {
-        // redirect to https://localhost:3000/signin
         console.log("logging in");
-        // redirect to https://localhost:9000/signin
-        window.location.href='http://localhost:9000/signin'
+        window.location.href='http://localhost:9000/signin';
     }
 
     let handleLogout = () => {
         console.log("logging out")
-        fetch("http://localhost:9000/signout", requestOptions)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        window.location.href='http://localhost:9000/signout';
     }
 
     useEffect(() => {
-        fetch("http://localhost:9000/api/session")
-        .then(res => {
-            let response = res.json()
-            if (response.isAuthenticated) {
-                console.log("logged in")
-                setLoggedin(true)
+        fetch("http://localhost:9000/api/users")
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === "loggedin") {
+                setLoggedin(true);
+            } else {
+                setLoggedin(false);
             }
-            console.log(loggedIn)
-        })
-        .catch(err => console.log(err))
-    })
+    })}, loggedIn);
 
 
     return (

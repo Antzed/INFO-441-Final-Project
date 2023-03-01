@@ -6,7 +6,6 @@ import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
 import cors from 'cors'
 import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
-import cors from 'cors'
 
 import models from './models.js'
 
