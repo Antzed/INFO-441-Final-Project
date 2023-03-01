@@ -68,7 +68,6 @@ function Gamebox(props) {
   return (
     <div className="flex flex-col w-80 h-52 rounded-lg overflow-hidden my-6 shadow-xl">
       <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center">
-        
         {!hasGame ? (
           <div onClick={handleAdd} className="cursor-pointer">
             <svg
@@ -86,8 +85,8 @@ function Gamebox(props) {
             </svg>
           </div>
         ) : (
-          <div className="cursor-pointer">
-            <img src={imageLink} alt="game" className="w-20 h-20" />
+          <div className="cursor-pointer w-full h-full">
+            <img src={imageLink} alt="game" className="object-cover" />
           </div>
         )}
       </div>
