@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
-import cors from 'cors'
 import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
 
 import models from './models.js'
@@ -18,7 +17,7 @@ const appSettings = {
         clientSecret:  CLIENT_SECRET,
     },	
     authRoutes: {
-        redirect: "http://localhost:9000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        redirect: "https://info441-gamedash.azurewebsites.net/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
         error: "/error", // the wrapper will redirect to this route in case of any error.
         unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     }
@@ -26,14 +25,13 @@ const appSettings = {
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { ppid } from 'process';
+//import { ppid } from 'process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 var app = express();
 
-app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

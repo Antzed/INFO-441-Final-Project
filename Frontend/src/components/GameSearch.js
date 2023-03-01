@@ -21,7 +21,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
     // alert("search " + e.target.searchText.value + " for " + catagoryName);
     //fetch and get the list of games
     fetch(
-      "http://localhost:9000/api/games/?search=" + e.target.searchText.value
+      "api/games/?search=" + e.target.searchText.value
     )
       // turn res into array
       .then((res) => res.json())
@@ -39,7 +39,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
     // get rid of em dash
     gameName = gameName.replace("—", "");
     setSelectedGame(gameName);
-    fetch(`http://localhost:9000/api/games/imgs?search=${gameName}`)
+    fetch(`api/games/imgs?search=${gameName}`)
       .then((res) => res.json())
       .then((data) => setGameImages(data))
       .catch((err) => console.log(err));

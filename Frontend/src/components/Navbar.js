@@ -5,19 +5,20 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate  } from 'reac
 function Navbar() {
 
     const [loggedIn, setLoggedin] = useState(false);
+    const url = window.location.href;
 
     let handleLogin = () => {
         console.log("logging in");
-        window.location.href='http://localhost:9000/signin';
+        window.location.href = url+'signin';
     }
 
     let handleLogout = () => {
         console.log("logging out")
-        window.location.href='http://localhost:9000/signout';
+        window.location.href = url+'signout';
     }
 
     useEffect(() => {
-        fetch("http://localhost:9000/api/users")
+        fetch("api/users")
         .then(res => res.json())
         .then(data => {
             if(data.status === "loggedin") {
