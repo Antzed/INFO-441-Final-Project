@@ -8,16 +8,16 @@ function Navbar() {
 
     let handleLogin = () => {
         console.log("logging in");
-        window.location.href='http://localhost:9000/signin';
+        window.location.href='signin';
     }
 
     let handleLogout = () => {
         console.log("logging out")
-        window.location.href='http://localhost:9000/signout';
+        window.location.href='signout';
     }
 
     useEffect(() => {
-        fetch("http://localhost:9000/api/users")
+        fetch("api/users")
         .then(res => res.json())
         .then(data => {
             if(data.status === "loggedin") {
