@@ -12,22 +12,24 @@ async function main(){
     await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
     console.log('Connected to MongoDB');
 
+    const categorySchema = new mongoose.Schema({
+        name: String,
+    });
+
     const voteSchema = new mongoose.Schema({
-        categoryID: {type: mongoose.Schema.Types.ObjectId, ref: "Category"},
         userName: String,
         gameTitle: String,
         gameImageUrl : String,
         date: Date,
+        categoryID: mongoose.Schema.Types.ObjectId,
     });
 
-    const categorySchema = new mongoose.Schema({
-        name: String,
-    });
     
-    models.Vote = mongoose.model('Vote', voteSchema);
-    console.log("Vote model created");
     models.Category = mongoose.model('Category', categorySchema);
     console.log("Category model created");
+    models.Vote = mongoose.model('Vote', voteSchema);
+    console.log("Vote model created");
+    
     
 }
 

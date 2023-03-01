@@ -22,16 +22,20 @@ router.get('/', async function(req, res, next) {
 // POST user's game vote
 router.post('/vote', async (req, res) => {
   try {
-    if (req.session.isAuthenticated) {
+    let thisSession = req.session;
+    console.log("catagories: ", req.body.categoryName);
+    const currentCategory = await req.models.Category.findOne({ name: req.body.categoryName });
+    if (thisSession.isAuthenticated) {
       const newVote = new req.models.Vote({
-        categoryID: await req.models.Category.find({name: req.body.categoryName})._id,
-        userName: req.session.account.username,
+        userName: thisSession.account.username,
         gameTitle: req.body.gameTitle,
         gameImageUrl: req.body.gameImageUrl,
         date: Date.now(),
+        categoryID: currentCategory._id,
       });
 
       await newVote.save();
+      res.json({ status: "success" });
 
     } else {
       res.send('Error: You must be logged in to vote for a game');
@@ -46,22 +50,16 @@ router.post('/vote', async (req, res) => {
 router.get('/vote', async (req, res) => {
   try {
     if (req.session.isAuthenticated) {
-      let user = await req.models.User.find({userName: req.session.account.username});
-      // let username = req.session.account.username;
-      // Check if user is in the database, if not add
-      if (!user) {
-        const newUser = new req.models.User({
-          userName: req.session.account.username,
-        });
-
-        await newUser.save();
-        user = await req.models.User.find({userName: req.session.account.username});
+      if (!req.query.username){
+        let allVotes = await req.models.Vote.find({username: req.session.account.username});
+        // May need to map this, will do later
+          res.json(allVotes);
+      } else {
+        let returnVotes = await req.models.Vote.find({username: req.query.username});
+        res.json(returnVotes);
       }
 
-      let allVotes = await req.models.Vote.find({username});
-
-      // May need to map this, will do later
-      res.json(allVotes);
+        
     } else {
       res.send('Error: You must be logged in to vote for a game');
     }

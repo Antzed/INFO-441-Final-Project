@@ -37,6 +37,8 @@ function GameSearch({ setShowSearch, catagoryName }) {
   function handleGameClick(e) {
     //get the clicked game name
     let gameName = e.target.innerText
+    // get rid of em dash
+    gameName = gameName.replace("—", "");
     setSelectedGame(gameName);
     fetch(`http://localhost:9000/api/games/imgs?search=${gameName}`)
       .then(res => res.json())
@@ -51,7 +53,7 @@ function GameSearch({ setShowSearch, catagoryName }) {
     setSelectGameImage(gameImage);
     console.log(gameImage);
     //post the game image to backend
-    handleStore();
+    handleStore(gameImage);
     setShowSearch(false);
   }
 
@@ -59,18 +61,18 @@ function GameSearch({ setShowSearch, catagoryName }) {
 
   // store the vote
   // TODO: get info from backend
-  function handleStore() {
+  function handleStore(gameImage) {
     // alert("store Game: " + gameName + " for Catagory: " + catagoryName);
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
-        categoryName: "Game of the year",
+        categoryName: catagoryName,
         gameTitle: selectedGame,
-        gameImageUrl: selectGameImage
+        gameImageUrl: gameImage
       })
     };
-    fetch('http://localhost:9000/api/users/vote', requestOptions)
+    fetch('api/users/vote', requestOptions)
     .then(response => response.json())
     .then(data => console.log(data));
   }

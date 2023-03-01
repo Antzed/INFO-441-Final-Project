@@ -2,16 +2,67 @@ import React, {useState, useEffect} from "react";
 
 
 
-function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
+function Gamebox(props) {
   const [hasGame, setHasGame] = useState(false); // whether this catagory already got a game added
+  const [imageLink, setImageLink] = useState(""); // the image link of the game
 
-
+  let setShowSearch = props.setShowSearch;
+  let setCatagoryName = props.setCatagoryName;
+  let catagoryName = props.catagoryName;
+  let categoryID = props.categoryID;
+  // const [addStatus, setAddStatus] = useState(false);
   function handleAdd() {
     // add a game
     // pass in current Catagory, then show search window
-    setCatagoryName(catagoryName);
-    setShowSearch(true);
+    fetch("api/users/")
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "loggedin") {
+        setCatagoryName(catagoryName);
+        setShowSearch(true);
+        //set add status to what it is not
+        // setAddStatus(!addStatus);
+      } else {
+        alert("Please login first");
+      }
+    })
   }
+
+  // if imageLink is not empty, then show the image
+  console.log("id" ,categoryID)
+  if (categoryID !== undefined) {
+    fetch("api/users/vote")
+    .then(res => res.json())
+    .then(data => {
+      // find the vote with the same catagoryID
+      console.log("total votes", data);
+      
+      let vote = data.find(vote => vote.categoryID === categoryID._id);
+      console.log("vote", vote);
+      if (vote) {
+        setHasGame(true);
+        setImageLink(vote.gameImageUrl);
+        console.log("image", imageLink);
+      } else {
+        setHasGame(false);
+      }
+    })
+  }
+
+
+  // useEffect(() => {
+    
+  //   })
+
+  //   // reload the page
+  //   // window.location.reload();
+    
+  // }, [categoryID, imageLink])
+
+
+
+
+
 
   //todo display picture of game if selected if not add a plus sign
   return (
@@ -35,7 +86,8 @@ function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
             </svg>
           </div>
         ) : (
-          <div>
+          <div className="cursor-pointer">
+            <img src={imageLink} alt="game" className="w-20 h-20" />
           </div>
         )}
       </div>

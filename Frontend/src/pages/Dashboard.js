@@ -8,17 +8,22 @@ function Dashboard() {
   console.log(showSearch);
   const [catagoryName, setCatagoryName] = useState("");
   const [votes, setVotes] = useState([]);
-  // everytime a vote is stored, get the votes
+  const [categoryIDs, setCategoryIDs] = useState([]);
+  const [injectCatagory, setInjectCatagory] = useState(false);
+
+
   useEffect(() => {
-    console.log("get votes")
-    fetch("http://localhost:3000/api/users/vote")
-    .then(res => {
-      let response = res.json()
-      setVotes(response)
-      console.log("votes: ", votes)
-    })
-  }, [])
+    fetch("api/games/category")
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          setCategoryIDs(data);}}
+      )
+      .catch(err => console.log(err));
+  }, [!categoryIDs])
   
+  console.log("catagoryIDs: ", categoryIDs)
+
   
   return (
     <>
@@ -40,34 +45,40 @@ function Dashboard() {
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
-                catagoryName={"1GameOfTheYear"}
+                catagoryName={"Favorite game"}
+                categoryID={categoryIDs[3]}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
-                catagoryName={"2GameOfTheYear"}
+                catagoryName={"Most played game"}
+                categoryID={categoryIDs[4]}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
-                catagoryName={"3GameOfTheYear"}
+                catagoryName={"Definitely recommend"}
+                categoryID={categoryIDs[5]}
               />
             </div>
             <div className="flex flex-row space-x-12">
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
-                catagoryName={"4GameOfTheYear"}
+                catagoryName={"Always wanted to play"}
+                categoryID={categoryIDs[0]}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
-                catagoryName={"5GameOfTheYear"}
+                catagoryName={"Rare gem"}
+                categoryID={categoryIDs[1]}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
-                catagoryName={"6GameOfTheYear"}
+                catagoryName={"Game of the year"}
+                categoryID={categoryIDs[2]}
               />
             </div>
           </div>

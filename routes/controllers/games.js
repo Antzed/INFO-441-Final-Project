@@ -55,4 +55,9 @@ router.get('/imgs', function(req, res, next) {
 
 });
 
+router.get('/category', async function(req, res, next) {
+    const category = await req.models.Category.find();
+    res.json(category);
+});
+
 export default router;
