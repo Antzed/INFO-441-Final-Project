@@ -51,11 +51,11 @@ router.get('/vote', async (req, res) => {
   try {
     if (req.session.isAuthenticated) {
       if (!req.query.username){
-        let allVotes = await req.models.Vote.find({username: req.session.account.username});
+        let allVotes = await req.models.Vote.find({userName: req.session.account.username});
         // May need to map this, will do later
-          res.json(allVotes);
+        res.json(allVotes);
       } else {
-        let returnVotes = await req.models.Vote.find({username: req.query.username});
+        let returnVotes = await req.models.Vote.find({userName: req.query.username});
         res.json(returnVotes);
       }
 
