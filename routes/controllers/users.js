@@ -69,4 +69,20 @@ router.get('/vote', async (req, res) => {
   }
 });
 
+// DELETE user's game vote
+router.get('/clear', async (req, res) => {
+  try {
+    if (req.session.isAuthenticated) {
+      await req.models.Vote.remove({username: req.session.account.username});
+      res.json({status: "success"});
+    } else {
+      res.send('Error: You must be logged in to delete for a game');
+    }
+  } catch(error) {
+    console.log("Error getting url preview: ", error);
+    res.status(500).json({status: "error", "error": error});
+  }
+});
+
+
 export default router;
