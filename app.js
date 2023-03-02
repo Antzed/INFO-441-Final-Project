@@ -59,10 +59,10 @@ app.use(sessions({
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
 
-app.get('/', async function(req, res, next) {
-    // send frontend/build folder
-    res.sendFile('index.html', { root: 'Frontend/build' });
-});
+// app.get('/', async function(req, res, next) {
+//     // send frontend/build folder
+//     res.sendFile('index.html', { root: 'Frontend/build' });
+// });
 
 
 app.use('/api', apiRouter);

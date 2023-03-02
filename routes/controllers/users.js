@@ -56,15 +56,11 @@ router.post('/vote', async (req, res) => {
 // GET user's game votes
 router.get('/vote', async (req, res) => {
   try {
-    if (req.session.isAuthenticated) {
-      if (!req.query.username){
-        let allVotes = await req.models.Vote.find({userName: req.session.account.username});
-        // May need to map this, will do later
-        res.json(allVotes);
-      } else {
-        let returnVotes = await req.models.Vote.find({userName: req.query.username});
-        res.json(returnVotes);
-      }
+    let thisSession = req.session;
+    if (thisSession.isAuthenticated) {
+      let allVotes = await req.models.Vote.find({userName: thisSession.account.username});
+      // May need to map this, will do later
+      res.json(allVotes);
 
         
     } else {

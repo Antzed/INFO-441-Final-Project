@@ -11,7 +11,7 @@ function Gamebox(props) {
   let setShowSearch = props.setShowSearch;
   let setCatagoryName = props.setCatagoryName;
   let catagoryName = props.catagoryName;
-  let categoryID = props.categoryID;
+  let category = props.category;
   let loggedIn = props.loggedIn;
   // const [addStatus, setAddStatus] = useState(false);
   function handleAdd() {
@@ -21,6 +21,7 @@ function Gamebox(props) {
       .then(res => res.json())
       .then(data => {
         if (data.status === "loggedin") {
+          console.log("catagoryName in handle add: " + catagoryName);
           setCatagoryName(catagoryName);
           setShowSearch(true);
           //set add status to what it is not
@@ -32,36 +33,38 @@ function Gamebox(props) {
   }
 
   // if imageLink is not empty, then show the image
-  console.log("id", categoryID)
-  if (categoryID !== undefined) {
-    fetch("api/users/vote")
-      .then(res => res.json())
-      .then(data => {
-        // find the vote with the same catagoryID
-        // console.log("total votes", data);
+  // console.log("id", categoryID)
+  useEffect(() => {
+    if (category !== undefined) {
+      fetch("api/users/vote")
+        .then(res => res.json())
+        .then(data => {
+          // find the vote with the same catagoryID
+          console.log("total votes", data);
 
-        let vote = data.find(vote => vote.categoryID === categoryID._id);
-        // console.log("vote", vote);
-        if (vote) {
-          setHasGame(true);
-          setImageLink(vote.gameImageUrl);
-          // console.log("image", imageLink);
-        } else {
-          setHasGame(false);
-        }
-      })
-  }
+          let vote = data.find(vote => vote.categoryID === category._id);
+          // console.log("vote", vote);
+          if (vote) {
+            setHasGame(true);
+            setImageLink(vote.gameImageUrl);
+            // console.log("image", imageLink);
+          } else {
+            setHasGame(false);
+          }
+        })
+    }
+  }, [category])
 
   useEffect(() => {
-    if (categoryID !== undefined && !loggedIn) {
-      fetch("api/votes/count?categoryID=" + categoryID._id)
+    if (category !== undefined && !loggedIn) {
+      fetch("api/votes/count?categoryID=" + category._id)
         .then(res => res.json())
         .then(data => {
           console.log("public game data", data);
           setPublicGameInfo(data);
         })
     }
-  }, [categoryID])
+  }, [category])
 
   //todo display picture of game if selected if not add a plus sign
   return (

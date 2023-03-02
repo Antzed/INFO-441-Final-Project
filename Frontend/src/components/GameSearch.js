@@ -14,6 +14,7 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
   // search games
 
   function handleSearch(e) {
+    console.log("searching catagory name", catagoryName);
     e.preventDefault();
     e.stopPropagation();
     setGameImages([]);
@@ -33,6 +34,7 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
   }
 
   function handleGameClick(e) {
+    console.log("game clicked catagory name", catagoryName);
     //get the clicked game name
     let gameName = e.target.innerText;
     // get rid of em dash
@@ -45,6 +47,7 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
   }
 
   function handleImageClick(e) {
+    console.log("image clicked catagory name", catagoryName);
     //get the clicked game name
     let gameImage = e.target.src;
     setSelectGameImage(gameImage);
@@ -57,8 +60,8 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
   // store the vote
   // TODO: get info from backend
   function handleStore(gameImage) {
-    
     // alert("store Game: " + gameName + " for Catagory: " + catagoryName);
+    console.log("catagory name in store game", catagoryName);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
