@@ -49,21 +49,6 @@ function Gamebox(props) {
     })
   }
 
-
-  // useEffect(() => {
-    
-  //   })
-
-  //   // reload the page
-  //   // window.location.reload();
-    
-  // }, [categoryID, imageLink])
-
-
-
-
-
-
   //todo display picture of game if selected if not add a plus sign
   return (
     <div className="flex flex-col w-80 h-52 rounded-lg overflow-hidden my-6 shadow-xl">
