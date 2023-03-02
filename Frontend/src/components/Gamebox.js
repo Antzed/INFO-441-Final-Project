@@ -10,6 +10,7 @@ function Gamebox(props) {
   let setCatagoryName = props.setCatagoryName;
   let catagoryName = props.catagoryName;
   let categoryID = props.categoryID;
+  let loggedIn = props.loggedIn;
   // const [addStatus, setAddStatus] = useState(false);
   function handleAdd() {
     // add a game
@@ -75,14 +76,24 @@ function Gamebox(props) {
           </div>
         )}
       </div>
-      <div className="flex w-full h-1/3 bg-dark-text text-white">
+      {loggedIn ? (
+        <div className="flex w-full h-1/3 bg-dark-text text-white">
         <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
           {catagoryName} 
         </div>
         <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center Btn border-2 border-white rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100" onClick={() => handleAdd()}>
             Change
         </div>
-      </div>
+        </div>
+      ) : (
+        <div className="flex w-full h-1/3 bg-dark-text text-white">
+        <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
+          {catagoryName} 
+        </div>
+        </div>
+        )
+        }
+      
       
     </div>
   );

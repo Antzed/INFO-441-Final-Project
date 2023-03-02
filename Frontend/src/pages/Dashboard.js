@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Gamebox from "../components/Gamebox";
 import GameSearch from "../components/GameSearch";
 //
-function Dashboard() {
+function Dashboard(props) {
   const [showSearch, setShowSearch] = useState(false);
   console.log(showSearch);
   const [catagoryName, setCatagoryName] = useState("");
@@ -49,18 +49,21 @@ function Dashboard() {
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Favorite game"}
                 categoryID={categoryIDs[3]}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Most played game"}
                 categoryID={categoryIDs[4]}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Definitely recommend"}
                 categoryID={categoryIDs[5]}
+                loggedIn={props.loggedIn}
               />
             </div>
             <div className="flex flex-row space-x-12">
@@ -69,18 +72,21 @@ function Dashboard() {
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Always wanted to play"}
                 categoryID={categoryIDs[0]}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Rare gem"}
                 categoryID={categoryIDs[1]}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Game of the year"}
                 categoryID={categoryIDs[2]}
+                loggedIn={props.loggedIn}
               />
             </div>
           </div>
