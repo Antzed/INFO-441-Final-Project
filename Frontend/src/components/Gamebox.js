@@ -75,9 +75,15 @@ function Gamebox(props) {
           </div>
         )}
       </div>
-      <div className="w-full h-1/3 font-bold bg-dark-text text-white text-xl p-4">
-        {catagoryName}
+      <div className="flex w-full h-1/3 bg-dark-text text-white">
+        <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
+          {catagoryName} 
+        </div>
+        <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center Btn border-2 border-white rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100" onClick={() => setShowSearch(true)}>
+            Change
+        </div>
       </div>
+      
     </div>
   );
 }
