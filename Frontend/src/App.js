@@ -28,8 +28,9 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<Landingpage/>}/> */}
           <Route path="/" element={<Dashboard loggedIn={loggedIn}/>} />
+          <Route path="/public" element={<Dashboard loggedIn={loggedIn}/>} />
+          
         </Routes>
-        
       </Router>
     </div>
   );

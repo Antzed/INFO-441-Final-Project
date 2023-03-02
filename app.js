@@ -10,6 +10,7 @@ import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
 import models from './models.js'
 
 import apiRouter from './routes/api.js';
+import publicRouter from './routes/public.js';
 
 const appSettings = {
     appCredentials: {
@@ -41,7 +42,6 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'Frontend/build')));
 
-
 app.use(function(req, res, next) {
     req.models = models;
     next();
@@ -58,10 +58,10 @@ app.use(sessions({
 
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
-  
 
 
 app.use('/api', apiRouter);
+app.use('/public', publicRouter);
 
 app.get('/signin',
     msid.signIn({postLoginRedirect: '/'})
