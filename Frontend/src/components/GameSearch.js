@@ -18,7 +18,6 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
     e.stopPropagation();
     setGameImages([]);
     setSelectedGame("");
-    // alert("search " + e.target.searchText.value + " for " + catagoryName);
     //fetch and get the list of games
     fetch(
       "api/games/?search=" + e.target.searchText.value
@@ -120,20 +119,6 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
               />
             ))}
         </div>
-        {/* {selectedGame && (
-            <div className="gameImages flex flex-wrap gap-4">
-              {gameImages.map((imageUrl, index) => (
-                <div
-                  key={index}
-                  className="gameImage cursor-pointer"
-                  onClick={() => handleImageClick(imageUrl)}
-                >
-                  <img src={imageUrl} alt={`Image ${index}`} />
-                </div>
-              ))}
-            </div>
-            )} */}
-        {/* {games.map((game) => { return <ResultItem onClick={() => handleStore(game)} gameName={game} />})} */}
         <div
           className="cancelBtn border-2 border-white px-8 py-4 rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100"
           onClick={() => setShowSearch(false)}>

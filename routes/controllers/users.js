@@ -76,27 +76,6 @@ router.get('/vote', async (req, res) => {
   }
 });
 
-// POST change user's vote on specific cataogry
-router.post('/vote-change', async (req, res) => {
-  try {
-    let thisSession = req.session;
-    let thisCatagory = req.body.categoryID;
-    let newGameTitle = req.body.gameTitle;
-    let newGameImage = req.body.gameImageUrl;
-    if (thisSession.isAuthenticated) {
-      const update = await req.models.Vote.update({userName: thisSession.account.username, categoryID: thisCatagory}, {gameTitle: newGameTitle, gameImageUrl: newGameImage});
-      res.json({ status: "success" });
-    } else {
-      res.send('Error: You must be logged in to vote for a game');
-    }
-  } catch(error) {
-    console.log("Error getting url preview: ", error);
-    res.status(500).json({status: "error", "error": error});
-  }
-});
-
-
-
 // DELETE user's game vote
 router.get('/clear', async (req, res) => {
   try {
