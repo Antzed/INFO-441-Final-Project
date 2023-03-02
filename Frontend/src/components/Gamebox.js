@@ -35,14 +35,14 @@ function Gamebox(props) {
     .then(res => res.json())
     .then(data => {
       // find the vote with the same catagoryID
-      console.log("total votes", data);
+      // console.log("total votes", data);
       
       let vote = data.find(vote => vote.categoryID === categoryID._id);
-      console.log("vote", vote);
+      // console.log("vote", vote);
       if (vote) {
         setHasGame(true);
         setImageLink(vote.gameImageUrl);
-        console.log("image", imageLink);
+        // console.log("image", imageLink);
       } else {
         setHasGame(false);
       }
@@ -79,7 +79,7 @@ function Gamebox(props) {
         <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
           {catagoryName} 
         </div>
-        <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center Btn border-2 border-white rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100" onClick={() => setShowSearch(true)}>
+        <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center Btn border-2 border-white rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100" onClick={() => handleAdd()}>
             Change
         </div>
       </div>

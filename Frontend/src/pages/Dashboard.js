@@ -11,6 +11,8 @@ function Dashboard() {
   const [categoryIDs, setCategoryIDs] = useState([]);
   const [injectCatagory, setInjectCatagory] = useState(false);
 
+  console.log("catagoryName", catagoryName);
+
 
   useEffect(() => {
     fetch("api/games/category")
@@ -85,7 +87,7 @@ function Dashboard() {
         </div>
       </div>
       {showSearch ? (
-        <GameSearch setShowSearch={setShowSearch} catagoryName={catagoryName} />
+        <GameSearch setShowSearch={setShowSearch} setCatagoryName={setCatagoryName} catagoryName={catagoryName}/>
       ) : (
         <></>
       )}

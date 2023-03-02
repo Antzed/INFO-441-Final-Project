@@ -4,7 +4,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ResultItem from "./ResultItem";
 import GameImage from "./GameImage";
 
-function GameSearch({ setShowSearch, catagoryName }) {
+function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
   //Search the game, Store the vote to backend, search need gameName(from here) + catagoryName(from gamebox) + catagoryID(find from DB)
   const [selectedGame, setSelectedGame] = useState("");
   const [games, setGames] = useState([]);
@@ -52,12 +52,13 @@ function GameSearch({ setShowSearch, catagoryName }) {
     console.log(gameImage);
     //post the game image to backend
     handleStore(gameImage);
-    setShowSearch(false);
+    
   }
 
   // store the vote
   // TODO: get info from backend
   function handleStore(gameImage) {
+    
     // alert("store Game: " + gameName + " for Catagory: " + catagoryName);
     const requestOptions = {
       method: "POST",
@@ -71,6 +72,9 @@ function GameSearch({ setShowSearch, catagoryName }) {
     fetch("api/users/vote", requestOptions)
       .then((response) => response.json())
       .then((data) => console.log(data));
+    setShowSearch(false);
+    // reload page
+    window.location.reload();
   }
 
   return (
