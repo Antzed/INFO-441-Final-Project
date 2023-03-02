@@ -27,8 +27,8 @@ function App() {
         <Navbar loggedIn={loggedIn}/>
         <Routes>
           {/* <Route path="/" element={<Landingpage/>}/> */}
-          <Route path="/" element={<Dashboard loggedIn={loggedIn}/>} />
-          <Route path="/public" element={<Dashboard loggedIn={loggedIn}/>} />
+          <Route path="/" element={<Dashboard loggedIn={false}/>} />
+          <Route path="/user" element={<Dashboard loggedIn={loggedIn}/>} />
           
         </Routes>
       </Router>
