@@ -94,7 +94,7 @@ function Gamebox(props) {
               </div>
             )}
           </div>
-          <div className="flex w-full h-1/3 bg-dark-text text-white">
+          <div className="flex w-full h-1/3 bg-dark-text text-white items-center">
               <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
                 {catagoryName}
               </div>
@@ -104,20 +104,20 @@ function Gamebox(props) {
           </div>
        </> ) : ( 
         <>
-          <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center">
-            <div className="cursor-pointer w-full h-full">
-                  <img src={publicGameInfo.gameImageUrl} alt="game" className="object-cover" />
-                </div>
+          <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center z-0">
+            <div className="cursor-pointer w-full h-full relative ">
+                  <img src={publicGameInfo.gameImageUrl} alt="game" className="object-cover " />
+                  <div class="opacity-0 hover:opacity-100 absolute inset-0 flex justify-center items-center z-20">{publicGameInfo.gameTitle}</div>
             </div>
-            <div className="flex w-full h-1/3 bg-dark-text text-white">
-              <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
-                  {catagoryName}
-              </div>
-              <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center font-bold">
-                {publicGameInfo.count} votes
-              </div>
-
+          </div>
+          <div className="flex w-full h-1/3 bg-dark-text text-white items-center z-10">
+            <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
+                {catagoryName}
             </div>
+            <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center font-bold">
+              {publicGameInfo.count} votes
+            </div>
+          </div>
             
         </>
         ) }

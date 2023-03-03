@@ -22,7 +22,7 @@ export function mostFrequent(arr, n) {
             maxCount++;
         }
     }
-
+    
 
     return [arr[res], maxCount];
 }
