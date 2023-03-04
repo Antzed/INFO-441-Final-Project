@@ -25,6 +25,16 @@ function Dashboard(props) {
       .catch(err => console.log(err));
   }
 
+  function handleClear(){
+    fetch("api/users/clear")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+    //reaload the page
+    window.location.reload();
+  }
+
   
   console.log("catagoryIDs: ", categories)
 
@@ -44,7 +54,15 @@ function Dashboard(props) {
           alt="asdf"
         />
         <div className="z-[2]">
-          {props.loggedIn ? (<h1 className="text-white">Welcome to your Dashboard!</h1>)
+          {props.loggedIn ? (
+            <div className="flex">
+              <h1 className="text-white justify-start flex-grow">Welcome to your Dashboard!</h1>
+              <div className="w-auto p-2 flex justify-end text-center items-center Btn border-2 border-white rounded-2xl font-bold hover:bg-white hover:text-dark-text transition duration-100" onClick={handleClear}>
+                Clear
+              </div>
+            </div>
+          
+          )
           : (<h1 className="text-white">Welcome to the Game Dash!</h1>)}
           
           <div className="flex flex-col items-center">
