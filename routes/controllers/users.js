@@ -39,16 +39,16 @@ router.post('/vote', async (req, res) => {
         });
 
         await newVote.save();
-        res.json({ status: "success" });
+        res.status(200).json({ status: "success" });
       } else {
         let updateVote = await req.models.Vote.findOneAndUpdate({ userName: thisSession.account.username, categoryID: currentCategory._id }, { gameTitle: req.body.gameTitle, gameImageUrl: req.body.gameImageUrl, date: Date.now() });
-        res.json({ status: "success" });
+        res.status(200).json({ status: "success" });
       }
     } else {
       res.send('Error: You must be logged in to vote for a game');
     }
   } catch(error) {
-    console.log("Error getting url preview: ", error);
+    console.log("Error saving user's vote: ", error);
     res.status(500).json({status: "error", "error": error});
   }
 });
@@ -64,7 +64,7 @@ router.get('/vote', async (req, res) => {
 
         
     } else {
-      res.send('Error: You must be logged in to vote for a game');
+      res.status(401).json({status: "error", "error": "not logged in"});
     }
   } catch(error) {
     console.log("Error getting url preview: ", error);
@@ -85,9 +85,9 @@ router.get('/clear', async (req, res) => {
 
       // const 
       const deleteVote = await req.models.Vote.deleteMany({userName: username});
-      res.json({status: "success"});
+      res.status(200).json({status: "success"});
     } else {
-      res.send('Error: You must be logged in to delete for a game');
+      res.status(401).json({status: "error", "error": "not logged in"});
     }
   } catch(error) {
     console.log("Error getting url preview: ", error);
