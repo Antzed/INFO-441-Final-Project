@@ -22,5 +22,23 @@ router.get('/count', async function(req, res, next) {
     res.json({gameTitle: mostFrequentGameNames[0], gameImageUrl: mostFrequentGameImageUrl[0], count: mostFrequentGameNames[1]});
 });
 
+// returns number of votes for each category for an input game title
+router.get('/gameVoteCount', async function(req, res, next) {
+    const gameTitle = req.query.gameTitle;
+    const gameVotes = await req.models.Vote.find({gameTitle: gameTitle});
+
+    let voteCount = [];
+    gameVotes.forEach(vote => {
+        let categoryIndex = voteCount.findIndex(cat => cat.categoryID === "" + vote.categoryID)
+        if (categoryIndex == -1) {
+            voteCount.push({categoryID: "" + vote.categoryID, count: 1});
+        } else {
+            voteCount[categoryIndex].count += 1;
+        }
+    });
+
+    res.json(voteCount);
+});
+
 
 export default router;
