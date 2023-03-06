@@ -60,4 +60,50 @@ router.get('/category', async function(req, res, next) {
     res.json(category);
 });
 
+router.get('/data', function(req, res, next) {
+    options.url += '&search=' +  req.query.search.replace(/\s+/g, '').toLowerCase();
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        
+        // most games do not have a description
+        let data = JSON.parse(body);
+        let gameData = {
+            name: data.results[0].name,
+            description: data.results[0].description,
+            rating: data.results[0].rating,
+            released: data.results[0].released,
+            background_image: data.results[0].background_image,
+            website: data.results[0].website,
+            platforms: data.results[0].platforms,
+        };
+        console.log(data);
+        res.json(gameData);
+        options.url = 'https://rawg-video-games-database.p.rapidapi.com/games?key=' + RAWG_APIKEY;
+    });
+
+});
+
+router.get('/allvotes', async function(req, res) {
+    try{
+        const votes = await req.models.Vote.find({gameTitle: req.query.search});
+        const categories = await req.models.Category.find();
+        let data = {}
+        for (let i = 0; i < votes.length; i++) {
+            let category = await req.models.Category.find({_id: votes[i].categoryID});
+            category = category[0]
+            if (!data[category.name]) {
+                data[category.name] = 1;
+            } else {
+                data[category.name]++;
+            }
+            console.log(data)
+            
+        };
+        res.json(data);
+    } catch (err) {
+        console.log(err);
+    }
+    
+});
+
 export default router;
