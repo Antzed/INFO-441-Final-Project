@@ -32,7 +32,7 @@ function Game() {
     return (
       <>
         <div
-          className="min-h-[100vh] w-screen relative pt-[80px] overflow-hidden"
+          className="min-h-[100vh] w-screen relative p-[80px] overflow-hidden"
           style={{
             background:
               "linear-gradient(92.92deg, #1139CB -8.48%, #6B22A5 95.28%)",
@@ -44,7 +44,7 @@ function Game() {
           />
           <div className="z-[2] mt-26 justify-center overflow-auto">
             <div className="flex flex-col justify-center max-w-3/4">
-              <h1 className="text-white justify-center flex-grow m-4">
+              <h1 className="text-white justify-center text-center flex-grow m-8 text-5xl">
                 {gameName}
               </h1>
 
@@ -52,7 +52,7 @@ function Game() {
                 <img
                   src="https://media.rawg.io/media/games/b4e/b4e4c73d5aa4ec66bbf75375c4847a2b.jpg"
                   alt="game"
-                  className="object-cover max-h-[300px] rounded-xl drop-shadow-xl"
+                  className="object-cover max-h-[320px] rounded-xl drop-shadow-xl"
                 />
                 {/* <img src={publicGameInfo.background_image} alt="game" className="object-cover w-2/3 h-1/3" /> */}
                 <div className="flex flex-row w-full justify-center ">
