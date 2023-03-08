@@ -55,13 +55,11 @@ function Game() {
           }
         }
       }
+      console.log("pc", pcCheker)
+      console.log("ps", psChecker)
+      console.log("xbox", xboxChecker)
     }, [publicGameInfo])
-
-    console.log("pc", pcCheker)
-    console.log("ps", psChecker)
-    console.log("xbox", xboxChecker)
     
-    //TODO: 1. need to map platforms to platformbox and display them.
     return (
       <>
         <div
@@ -91,13 +89,6 @@ function Game() {
                   { xboxChecker ? ( <><Platformbox platform="X-BOX" /></>) : <></> }
                   { pcCheker ? (<><Platformbox platform="PC" /></> ) : <></> }
                   { psChecker? (<><Platformbox platform="PLAYSTATION" /></> ) : <></> }
-                  {/* {test.platforms.map((platform) => {
-                    if (platform.platform.name.includes("Xbox", "PlayStation", "PC")) {
-                      return (
-                        <Platformbox platform={platform.platform.name} />
-                      )
-                    }
-                    })} */}
                 </div>
 
                 <div className="mt-8 flex justify-evenly gap-4 max-w-[800px]">
