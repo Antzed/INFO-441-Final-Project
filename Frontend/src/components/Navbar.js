@@ -3,9 +3,11 @@ import { useEffect, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate  } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import ResultItem from "./ResultItem";
 
 function Navbar(props) {
     const [selectedGame, setSelectedGame] = useState("");
+    const [result , setResult] = useState([]);
 
     let handleLogin = () => {
         console.log("logging in");
@@ -31,6 +33,9 @@ function Navbar(props) {
         // e.preventDefault();
         // e.stopPropagation();
         setSelectedGame(e.target.value);
+        fetch(`api/games/?search=${e.target.value}`)
+        .then(res => res.json())
+        .then(data => {setResult(data)})
         console.log(selectedGame)
     }
     return (
@@ -41,23 +46,30 @@ function Navbar(props) {
               GameDash.
             </div>
           </Link>
+          
           <form
             id="search-form-nav"
-            className="flex flex-row items-center justify-between bg-transparent rounded-3xl p-4 w-1/5 h-2 border-2 border-white ml-[50%]">
+            className="flex flex-column items-center justify-between bg-transparent rounded-3xl p-4 w-1/5 h-2 border-2 border-white ml-[50%]">
             <input
               className="py-3 px-3 bg-transparent flex-1 outline-none "
               name="searchTextNav"
               placeholder="Search Game"
               onChange={(e) => handleSearch(e)}
             />
+           
             <Link
-              to={"/game/" + selectedGame}
+              to={"/" + selectedGame}
               query={{ game: selectedGame }}
               form="search-form-nav"
               className="text-white scale-125 ">
               <FontAwesomeIcon icon={faSearch} />
             </Link>
           </form>
+          {result.length > 500 ? (<div className="resultList w-50 gap-4 overflow-y-scroll">
+              {/* put each game anme in a new line not using link */}
+              {result.map((game, index) => {return <div><h4>{game}</h4></div>} )}
+              
+            </div>):(<></>)}
           <div>
             {props.loggedIn ? (
               <div className="flex">

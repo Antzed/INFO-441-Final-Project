@@ -19,7 +19,7 @@ const appSettings = {
         clientSecret:  CLIENT_SECRET,
     },	
     authRoutes: {
-        redirect: "http://localhost:9000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        redirect: "http://localhost:9000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect""https://info-441-game-dash-backup.azurewebsites.net/redirect"
         error: "/error", // the wrapper will redirect to this route in case of any error.
         unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     }

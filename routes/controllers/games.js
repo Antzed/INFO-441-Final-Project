@@ -61,7 +61,7 @@ router.get('/category', async function(req, res, next) {
 });
 
 router.get('/data', function(req, res, next) {
-    options.url += '&search=' +  req.query.search.replace(/\s+/g, '').toLowerCase();
+    options.url += '&search=' +  req.query.search.toLowerCase();
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
         
@@ -76,7 +76,7 @@ router.get('/data', function(req, res, next) {
             website: data.results[0].website,
             platforms: data.results[0].platforms,
         };
-        console.log(data);
+        console.log(gameData);
         res.json(gameData);
         options.url = 'https://rawg-video-games-database.p.rapidapi.com/games?key=' + RAWG_APIKEY;
     });

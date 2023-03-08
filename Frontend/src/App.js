@@ -30,7 +30,7 @@ function App() {
           {/* <Route path="/" element={<Landingpage/>}/> */}
           <Route path="/" element={<Dashboard loggedIn={false}/>} />
           <Route path="/user" element={<Dashboard loggedIn={loggedIn}/>} />
-          <Route path="/game/:gameName" element={<Game/>} />
+          <Route path="/:gameName" element={<Game/>} />
         </Routes>
       </Router>
     </div>

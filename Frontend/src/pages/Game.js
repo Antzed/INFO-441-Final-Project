@@ -6,27 +6,54 @@ function Game() {
     const [publicGameInfo, setPublicGameInfo] = useState({}); // the public game info of the game
     const [votes, setVotes] = useState({}) //vote information for all related categories
     let { gameName } = useParams();
+    const [pcCheker, setPcCheker] = useState(false);
+    const [psChecker, setPsChecker] = useState(false);
+    const [xboxChecker, setXboxChecker] = useState(false);
 
     //fetching game details
     //TODO: add error handling, should display a prompt that search is invalid
     useEffect(() => {
-        fetch(`http://localhost:9000/api/games/data?search=${gameName}`) //doesn't work with spaces, and needs absolute path
+        fetch(`api/games/data?search=${gameName}`) //doesn't work with spaces, and needs absolute path
         .then(res => res.json())
         .then(data => {
             console.log("game page", data);
+            JSON.stringify(data);
             setPublicGameInfo(data);
         })
         .catch(err => console.log(err))
 
-        //getting votes for all the categories
-        fetch(`http://localhost:9000/api/games/allvotes?search=${gameName}`)
+        // getting votes for all the categories
+        fetch(`api/games/allvotes?search=${gameName}`)
         .then(res => res.json())
         .then(data => {
+            
+            JSON.stringify(data);
             console.log("count data", data);
+            console.log("count data", typeof data);
+            console.log(Object.keys(data))
+            console.log(Object.values(data))
             setVotes(data);
         })
         .catch(err => console.log(err))
     }, [])
+
+    // create a function that search through the publicGameInfo and return the platform names
+    
+    if (Object.keys(publicGameInfo).length !== 0) {
+      console.log(publicGameInfo)
+      for (let i = 0; i < publicGameInfo.platforms.length; i++) {
+        //  check if the platform's name include "Pc", "Playstation" or Xbox", if so, set the checker to 1
+        if (publicGameInfo.platforms[i].platform.name.includes("PC")) {
+            setPcCheker(true);
+        }
+        if (publicGameInfo.platforms[i].platform.name.includes("PlayStation")) {
+            setPsChecker(true);
+        }
+        if (publicGameInfo.platforms[i].platform.name.includes("Xbox")) {
+            setXboxChecker(true);
+        }
+      }
+    }
     
     //TODO: 1. need to map platforms to platformbox and display them. 2. need to display votes for each category (votes is an object)
     return (
@@ -50,17 +77,15 @@ function Game() {
 
               <div className="flex flex-col items-center">
                 <img
-                  src="https://media.rawg.io/media/games/b4e/b4e4c73d5aa4ec66bbf75375c4847a2b.jpg"
+                  src={publicGameInfo.background_image}
                   alt="game"
                   className="object-cover max-h-[320px] rounded-xl drop-shadow-xl"
                 />
                 {/* <img src={publicGameInfo.background_image} alt="game" className="object-cover w-2/3 h-1/3" /> */}
                 <div className="flex flex-row w-full justify-center ">
-                  {/* {publicGameInfo.platforms.map((platform) => {
-                      <Platformbox platform={platform.name} />
-                  })} */}
-                  <Platformbox platform="XBOX" />
-                  <Platformbox platform="XBOX" />
+                  { xboxChecker ? ( <><Platformbox platform="X-BOX" /></>) : <></> }
+                  { pcCheker ? (<><Platformbox platform="PC" /></> ) : <></> }
+                  { psChecker? (<><Platformbox platform="PLAYSTATION" /></> ) : <></> }
                 </div>
 
                 <div className="mt-8 flex justify-evenly gap-4 max-w-[800px]">
@@ -68,27 +93,23 @@ function Game() {
                     <h2 className="text-white justify-start flex-grow">
                       Release Date
                     </h2>
-                    <p className="mb-8">November 18, 2011</p>
+                    <p className="mb-8">{publicGameInfo.released}</p>
                     <h2 className="text-white justify-start flex-grow">
                       Votes
                     </h2>
                     {/* {votes.entries().map(keyValue => {
                         <p>{keyValue[0]}: {keyValue[1]}</p>})
                     } */}
-                    <p>test: 1 vote</p>
+                    <p>{Object.keys(votes)}: {Object.values(votes)} vote</p>
                   </div>
-                  <p>{publicGameInfo.released}</p>
                   <div className="flex-1">
                     <h2 className="text-white justify-start flex-grow max-w-3/4">
                       Description
                     </h2>
                     <p>
-                      Minecraft is a sandbox game developed by Mojang Studios.
-                      The game was created by Markus "Notch" Persson in the Java
-                      programming language.
+                      {publicGameInfo.description ? publicGameInfo.description : "No description available"}
                     </p>
                   </div>
-                  <p>{publicGameInfo.description}</p>
                 </div>
               </div>
             </div>
