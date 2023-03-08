@@ -59,6 +59,22 @@ function Game() {
       console.log("ps", psChecker)
       console.log("xbox", xboxChecker)
     }, [publicGameInfo])
+
+    function Vote(props){
+      return (
+        <p>{props.category}:{props.count}</p>
+      )
+    }
+
+    function PrintVote(props){
+      let div = <div></div>
+      for (const category in props.votes){
+        // add <p>{category}:{props.votes[category]}</p> to the div and add a new line
+        div = <>{div}<p>{category}: {props.votes[category]} count</p></>
+      }
+      
+      return (<>{div}</>)
+    }
     
     return (
       <>
@@ -100,7 +116,8 @@ function Game() {
                     <h2 className="text-white justify-start flex-grow">
                       Votes
                     </h2>
-                    <p>{Object.keys(votes)}: {Object.values(votes)}</p>
+                    <PrintVote votes={votes}/>
+                    {/* <p>{Object.keys(votes)}: {Object.values(votes)}</p> */}
                     <h2 className="text-white justify-start flex-grow mt-8">
                       Rating
                     </h2>
