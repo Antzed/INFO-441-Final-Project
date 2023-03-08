@@ -4,6 +4,16 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ResultItem from "./ResultItem";
 import GameImage from "./GameImage";
 
+const escapeHTML = str => !str ? str : str.replace(/[&<>'"]/g, 
+    tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+    }[tag]));
+
+
 function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
   //Search the game, Store the vote to backend, search need gameName(from here) + catagoryName(from gamebox) + catagoryID(find from DB)
   const [selectedGame, setSelectedGame] = useState("");
@@ -21,7 +31,7 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
     setSelectedGame("");
     //fetch and get the list of games
     fetch(
-      "api/games/?search=" + e.target.searchText.value
+      "api/games/?search=" + encodeURIComponent(e.target.searchText.value)
     )
       // turn res into array
       .then((res) => res.json())
@@ -40,7 +50,7 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
     // get rid of em dash
     gameName = gameName.replace("—", "");
     setSelectedGame(gameName);
-    fetch(`api/games/imgs?search=${gameName}`)
+    fetch(`api/games/imgs?search=${encodeURIComponent(gameName)}`)
       .then((res) => res.json())
       .then((data) => setGameImages(data))
       .catch((err) => console.log(err));
@@ -66,9 +76,9 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        categoryName: catagoryName,
-        gameTitle: selectedGame,
-        gameImageUrl: gameImage,
+        categoryName: escapeHTML(catagoryName),
+        gameTitle: escapeHTML(selectedGame),
+        gameImageUrl: escapeHTML(gameImage),
       }),
     };
     fetch("api/users/vote", requestOptions)
