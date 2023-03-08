@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate  } from 'reac
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ResultItem from "./ResultItem";
+import DropdownInput from 'react-dropdown'
 
 function Navbar(props) {
     const [selectedGame, setSelectedGame] = useState("");
     const [result , setResult] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
 
     let handleLogin = () => {
         console.log("logging in");
@@ -32,12 +34,23 @@ function Navbar(props) {
     let handleSearch = (e) => {
         // e.preventDefault();
         // e.stopPropagation();
+        setShowDropdown(e.target.value.length > 0);
         setSelectedGame(e.target.value);
         fetch(`api/games/?search=${e.target.value}`)
         .then(res => res.json())
         .then(data => {setResult(data)})
+        .catch(err => console.log(err));
         console.log(selectedGame)
+        console.log("dropdown", result)
+        
     }
+
+    let handleDropdownChange = (e) => {
+      const value = e.target.value
+      console.log(value)
+      setSelectedGame(value)
+      setShowDropdown(false);
+    };
     return (
       <nav className="test-white py-4 fixed top-0 w-full z-[10] backdrop-blur-md">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -49,14 +62,31 @@ function Navbar(props) {
           
           <form
             id="search-form-nav"
-            className="flex flex-column items-center justify-between bg-transparent rounded-3xl p-4 w-1/5 h-2 border-2 border-white ml-[50%]">
+            className="flex flex-column items-center justify-between bg-transparent rounded-3xl p-4 w-1/4 h-2 border-2 border-white ml-[50%]"
+          >
+            <div style={{position: "relative"}}>
             <input
               className="py-3 px-3 bg-transparent flex-1 outline-none "
               name="searchTextNav"
               placeholder="Search Game"
               onChange={(e) => handleSearch(e)}
+              value={selectedGame}
             />
-           
+            {showDropdown && (
+              <div style={{ position: "absolute", top: "100%", left: 0, overflow: "visible", zIndex: 3, width: "100%", backgroundColor: "white" }}>
+              <select onChange={handleDropdownChange} value="options" size={result.length} style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                width: "100%",
+                backgroundColor: "white",
+                color: "black"
+              }}>
+                {result.map(game => {return <option key={game} value={game} style={{color: "black"}}>{game}</option>})}
+              </select>
+              </div>
+            )}
+            
             <Link
               to={"/" + selectedGame}
               query={{ game: selectedGame }}
@@ -64,12 +94,9 @@ function Navbar(props) {
               className="text-white scale-125 ">
               <FontAwesomeIcon icon={faSearch} />
             </Link>
+            </div>
           </form>
-          {result.length > 500 ? (<div className="resultList w-50 gap-4 overflow-y-scroll">
-              {/* put each game anme in a new line not using link */}
-              {result.map((game, index) => {return <div><h4>{game}</h4></div>} )}
-              
-            </div>):(<></>)}
+          
           <div>
             {props.loggedIn ? (
               <div className="flex">
