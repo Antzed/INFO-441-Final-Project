@@ -35,27 +35,33 @@ function Game() {
             setVotes(data);
         })
         .catch(err => console.log(err))
+        
     }, [])
 
-    // create a function that search through the publicGameInfo and return the platform names
-    
-    if (Object.keys(publicGameInfo).length !== 0) {
-      console.log(publicGameInfo)
-      for (let i = 0; i < publicGameInfo.platforms.length; i++) {
-        //  check if the platform's name include "Pc", "Playstation" or Xbox", if so, set the checker to 1
-        if (publicGameInfo.platforms[i].platform.name.includes("PC")) {
-            setPcCheker(true);
-        }
-        if (publicGameInfo.platforms[i].platform.name.includes("PlayStation")) {
-            setPsChecker(true);
-        }
-        if (publicGameInfo.platforms[i].platform.name.includes("Xbox")) {
-            setXboxChecker(true);
+    useEffect(() => {
+      //create a function that search through the publicGameInfo and return the platform names
+      if (Object.keys(publicGameInfo).length !== 0) {
+        console.log(publicGameInfo)
+        for (let i = 0; i < publicGameInfo.platforms.length; i++) {
+          //  check if the platform's name include "Pc", "Playstation" or Xbox", if so, set the checker to 1
+          if (publicGameInfo.platforms[i].platform.name.includes("PC")) {
+              setPcCheker(true);
+          }
+          if (publicGameInfo.platforms[i].platform.name.includes("PlayStation")) {
+              setPsChecker(true);
+          }
+          if (publicGameInfo.platforms[i].platform.name.includes("Xbox")) {
+              setXboxChecker(true);
+          }
         }
       }
-    }
+    }, [publicGameInfo])
+
+    console.log("pc", pcCheker)
+    console.log("ps", psChecker)
+    console.log("xbox", xboxChecker)
     
-    //TODO: 1. need to map platforms to platformbox and display them. 2. need to display votes for each category (votes is an object)
+    //TODO: 1. need to map platforms to platformbox and display them.
     return (
       <>
         <div
@@ -72,7 +78,7 @@ function Game() {
           <div className="z-[2] mt-26 justify-center overflow-auto">
             <div className="flex flex-col justify-center max-w-3/4">
               <h1 className="text-white justify-center text-center flex-grow m-8 text-5xl">
-                {gameName}
+                {publicGameInfo.name}
               </h1>
 
               <div className="flex flex-col items-center">
@@ -81,11 +87,17 @@ function Game() {
                   alt="game"
                   className="object-cover max-h-[320px] rounded-xl drop-shadow-xl"
                 />
-                {/* <img src={publicGameInfo.background_image} alt="game" className="object-cover w-2/3 h-1/3" /> */}
                 <div className="flex flex-row w-full justify-center ">
                   { xboxChecker ? ( <><Platformbox platform="X-BOX" /></>) : <></> }
                   { pcCheker ? (<><Platformbox platform="PC" /></> ) : <></> }
                   { psChecker? (<><Platformbox platform="PLAYSTATION" /></> ) : <></> }
+                  {/* {test.platforms.map((platform) => {
+                    if (platform.platform.name.includes("Xbox", "PlayStation", "PC")) {
+                      return (
+                        <Platformbox platform={platform.platform.name} />
+                      )
+                    }
+                    })} */}
                 </div>
 
                 <div className="mt-8 flex justify-evenly gap-4 max-w-[800px]">
@@ -97,10 +109,11 @@ function Game() {
                     <h2 className="text-white justify-start flex-grow">
                       Votes
                     </h2>
-                    {/* {votes.entries().map(keyValue => {
-                        <p>{keyValue[0]}: {keyValue[1]}</p>})
-                    } */}
-                    <p>{Object.keys(votes)}: {Object.values(votes)} vote</p>
+                    <p>{Object.keys(votes)}: {Object.values(votes)}</p>
+                    <h2 className="text-white justify-start flex-grow mt-8">
+                      Rating
+                    </h2>
+                    <p>{publicGameInfo.rating ? publicGameInfo.rating: "No rating available"}</p>
                   </div>
                   <div className="flex-1">
                     <h2 className="text-white justify-start flex-grow max-w-3/4">
@@ -109,6 +122,7 @@ function Game() {
                     <p>
                       {publicGameInfo.description ? publicGameInfo.description : "No description available"}
                     </p>
+                    
                   </div>
                 </div>
               </div>
