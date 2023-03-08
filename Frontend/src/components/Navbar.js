@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate  } from 'reac
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ResultItem from "./ResultItem";
-import DropdownInput from 'react-dropdown'
+
 
 function Navbar(props) {
     const [selectedGame, setSelectedGame] = useState("");
