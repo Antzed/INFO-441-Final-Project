@@ -36,7 +36,7 @@ function Navbar(props) {
         // e.stopPropagation();
         setShowDropdown(e.target.value.length > 0);
         setSelectedGame(e.target.value);
-        fetch(`api/games/?search=${e.target.value}`)
+        fetch(`api/games/?search=${encodeURIComponent(e.target.value)}`)
         .then(res => res.json())
         .then(data => {setResult(data)})
         .catch(err => console.log(err));

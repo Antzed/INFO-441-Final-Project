@@ -70,7 +70,7 @@ function Game() {
       let div = <div></div>
       for (const category in props.votes){
         // add <p>{category}:{props.votes[category]}</p> to the div and add a new line
-        div = <>{div}<p>{category}: {props.votes[category]} count</p></>
+        div = <>{div}<p>{category}: {props.votes[category]} votes</p></>
       }
       
       return (<>{div}</>)

@@ -55,7 +55,7 @@ function Gamebox(props) {
 
   useEffect(() => {
     if (category !== undefined && !loggedIn) {
-      fetch("api/votes/count?categoryID=" + category._id)
+      fetch("api/votes/count?categoryID=" + encodeURIComponent(category._id))
         .then(res => res.json())
         .then(data => {
           console.log("public game data", data);

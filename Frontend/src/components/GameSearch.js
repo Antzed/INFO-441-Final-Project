@@ -76,9 +76,9 @@ function GameSearch({ setShowSearch, setCatagoryName, catagoryName }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        categoryName: escapeHTML(catagoryName),
-        gameTitle: escapeHTML(selectedGame),
-        gameImageUrl: escapeHTML(gameImage),
+        categoryName: catagoryName,
+        gameTitle: selectedGame,
+        gameImageUrl: gameImage,
       }),
     };
     fetch("api/users/vote", requestOptions)

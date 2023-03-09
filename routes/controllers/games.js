@@ -74,26 +74,30 @@ router.get('/category', async function(req, res, next) {
 });
 
 router.get('/data', function(req, res, next) {
-    options.url += '&search=' +  req.query.search.toLowerCase();
-    request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-        
-        // most games do not have a description
-        let data = JSON.parse(body);
-        let gameData = {
-            name: data.results[0].name,
-            description: data.results[0].description,
-            rating: data.results[0].rating,
-            released: data.results[0].released,
-            background_image: data.results[0].background_image,
-            website: data.results[0].website,
-            platforms: data.results[0].platforms,
-        };
-        console.log(gameData);
-        res.json(gameData);
-        options.url = 'https://rawg-video-games-database.p.rapidapi.com/games?key=' + RAWG_APIKEY;
-    });
-
+    try {
+        options.url += '&search=' +  req.query.search.toLowerCase();
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            
+            // most games do not have a description
+            let data = JSON.parse(body);
+            let gameData = {
+                name: data.results[0].name,
+                description: data.results[0].description,
+                rating: data.results[0].rating,
+                released: data.results[0].released,
+                background_image: data.results[0].background_image,
+                website: data.results[0].website,
+                platforms: data.results[0].platforms,
+            };
+            console.log(gameData);
+            res.json(gameData);
+            options.url = 'https://rawg-video-games-database.p.rapidapi.com/games?key=' + RAWG_APIKEY;
+        });
+    } catch(error) {
+        console.log("Error getting game description: ", error);
+        res.status(500).json({status: "error", "error": error}); 
+    }
 });
 
 router.get('/allvotes', async function(req, res) {
