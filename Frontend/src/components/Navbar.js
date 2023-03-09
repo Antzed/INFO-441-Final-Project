@@ -62,7 +62,7 @@ function Navbar(props) {
           
           <form
             id="search-form-nav"
-            className="flex flex-column items-center justify-between bg-transparent rounded-3xl p-4 w-1/4 h-2 border-2 border-white ml-[50%]"
+            className="flex flex-column items-center justify-between bg-transparent rounded-3xl p-4 w-1/5 h-2 border-2 border-white ml-[50%]"
           >
             <div style={{position: "relative"}}>
             <input
