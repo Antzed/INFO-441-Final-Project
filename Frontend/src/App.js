@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import Game from './pages/Game';
 import Navbar from './components/Navbar';
 import Background from './components/Background';
 import { useEffect, useState} from 'react';
@@ -29,7 +30,7 @@ function App() {
           {/* <Route path="/" element={<Landingpage/>}/> */}
           <Route path="/" element={<Dashboard loggedIn={false}/>} />
           <Route path="/user" element={<Dashboard loggedIn={loggedIn}/>} />
-          
+          <Route path="/:gameName" element={<Game/>} />
         </Routes>
       </Router>
     </div>

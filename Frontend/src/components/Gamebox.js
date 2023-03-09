@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-
-
 function Gamebox(props) {
   const [hasGame, setHasGame] = useState(false); // whether this catagory already got a game added
   const [imageLink, setImageLink] = useState(""); // the image link of the game
