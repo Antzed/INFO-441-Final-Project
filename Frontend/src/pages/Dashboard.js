@@ -3,26 +3,41 @@ import React, { useState, useEffect } from "react";
 import Gamebox from "../components/Gamebox";
 import GameSearch from "../components/GameSearch";
 //
-function Dashboard() {
+function Dashboard(props) {
   const [showSearch, setShowSearch] = useState(false);
   console.log(showSearch);
   const [catagoryName, setCatagoryName] = useState("");
   const [votes, setVotes] = useState([]);
-  const [categoryIDs, setCategoryIDs] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [injectCatagory, setInjectCatagory] = useState(false);
 
+  console.log("catagoryName", catagoryName);
 
-  useEffect(() => {
+
+
+  if (categories.length === 0) {
     fetch("api/games/category")
       .then(res => res.json())
       .then(data => {
         if (data) {
-          setCategoryIDs(data);}}
+          setCategories(data);}}
       )
       .catch(err => console.log(err));
-  }, [!categoryIDs])
+  }
+
+  function handleClear(){
+    fetch("api/users/clear")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+    //reaload the page
+    window.location.reload();
+  }
+
   
-  console.log("catagoryIDs: ", categoryIDs)
+  console.log("catagoryIDs: ", categories)
+
 
   
   return (
@@ -39,26 +54,40 @@ function Dashboard() {
           alt="asdf"
         />
         <div className="z-[2]">
-          <h1 className="text-white">Welcome to your Dashboard!</h1>
+          {props.loggedIn ? (
+            <div className="flex">
+              <h1 className="text-white justify-start flex-grow">Welcome to your Dashboard!</h1>
+              <div className="w-auto p-2 flex justify-end text-center items-center Btn border-2 border-white rounded-2xl font-bold hover:bg-white hover:text-dark-text transition duration-100" onClick={handleClear}>
+                Clear
+              </div>
+            </div>
+          
+          )
+          : (<h1 className="text-white">Welcome to the Game Dash!</h1>)}
+          
           <div className="flex flex-col items-center">
             <div className="flex flex-row space-x-12">
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Favorite game"}
-                categoryID={categoryIDs[3]}
+                //catagoryID = the element.id in the categoryIDs array that has the name "Favorite game" if it exists
+                category = {categories.find(element => element.name === "Favorite game")}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Most played game"}
-                categoryID={categoryIDs[4]}
+                category = {categories.find(element => element.name === "Most played game")}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Definitely recommend"}
-                categoryID={categoryIDs[5]}
+                category = {categories.find(element => element.name === "Definitely recommend")}
+                loggedIn={props.loggedIn}
               />
             </div>
             <div className="flex flex-row space-x-12">
@@ -66,26 +95,29 @@ function Dashboard() {
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Always wanted to play"}
-                categoryID={categoryIDs[0]}
+                category = {categories.find(element => element.name === "Always wanted to play")}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Rare gem"}
-                categoryID={categoryIDs[1]}
+                category = {categories.find(element => element.name === "Rare gem")}
+                loggedIn={props.loggedIn}
               />
               <Gamebox
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Game of the year"}
-                categoryID={categoryIDs[2]}
+                category = {categories.find(element => element.name === "Game of the year")}
+                loggedIn={props.loggedIn}
               />
             </div>
           </div>
         </div>
       </div>
       {showSearch ? (
-        <GameSearch setShowSearch={setShowSearch} catagoryName={catagoryName} />
+        <GameSearch setShowSearch={setShowSearch} setCatagoryName={setCatagoryName} catagoryName={catagoryName}/>
       ) : (
         <></>
       )}

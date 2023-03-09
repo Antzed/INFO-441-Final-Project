@@ -1,158 +1,141 @@
-import React, {useState, useEffect} from "react";
-
-
+import React, { useState, useEffect } from "react";
 
 function Gamebox(props) {
   const [hasGame, setHasGame] = useState(false); // whether this catagory already got a game added
   const [imageLink, setImageLink] = useState(""); // the image link of the game
 
+  const [publicGameInfo, setPublicGameInfo] = useState({}); // the public game info of the game
+
   let setShowSearch = props.setShowSearch;
   let setCatagoryName = props.setCatagoryName;
   let catagoryName = props.catagoryName;
-  let categoryID = props.categoryID;
+  let category = props.category;
+  let loggedIn = props.loggedIn;
   // const [addStatus, setAddStatus] = useState(false);
   function handleAdd() {
     // add a game
     // pass in current Catagory, then show search window
     fetch("api/users/")
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "loggedin") {
-        setCatagoryName(catagoryName);
-        setShowSearch(true);
-        //set add status to what it is not
-        // setAddStatus(!addStatus);
-      } else {
-        alert("Please login first");
-      }
-    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "loggedin") {
+          console.log("catagoryName in handle add: " + catagoryName);
+          setCatagoryName(catagoryName);
+          setShowSearch(true);
+          //set add status to what it is not
+          // setAddStatus(!addStatus);
+        } else {
+          alert("Please login first");
+        }
+      })
   }
 
   // if imageLink is not empty, then show the image
-  console.log("id" ,categoryID)
-  if (categoryID !== undefined) {
-    fetch("api/users/vote")
-    .then(res => res.json())
-    .then(data => {
-      // find the vote with the same catagoryID
-      console.log("total votes", data);
-      
-      let vote = data.find(vote => vote.categoryID === categoryID._id);
-      console.log("vote", vote);
-      if (vote) {
-        setHasGame(true);
-        setImageLink(vote.gameImageUrl);
-        console.log("image", imageLink);
-      } else {
-        setHasGame(false);
-      }
-    })
-  }
+  // console.log("id", categoryID)
+  useEffect(() => {
+    if (category !== undefined) {
+      fetch("api/users/vote")
+        .then(res => res.json())
+        .then(data => {
+          // find the vote with the same catagoryID
+          console.log("total votes", data);
 
+          let vote = data.find(vote => vote.categoryID === category._id);
+          // console.log("vote", vote);
+          if (vote) {
+            setHasGame(true);
+            setImageLink(vote.gameImageUrl);
+            // console.log("image", imageLink);
+          } else {
+            setHasGame(false);
+          }
+        })
+    }
+  }, [category])
 
-  // useEffect(() => {
-    
-  //   })
-
-  //   // reload the page
-  //   // window.location.reload();
-    
-  // }, [categoryID, imageLink])
-
-
-
-
-
+  useEffect(() => {
+    if (category !== undefined && !loggedIn) {
+      fetch("api/votes/count?categoryID=" + encodeURIComponent(category._id))
+        .then(res => res.json())
+        .then(data => {
+          console.log("public game data", data);
+          setPublicGameInfo(data);
+        })
+    }
+  }, [category])
 
   //todo display picture of game if selected if not add a plus sign
   return (
     <div className="flex flex-col w-80 h-52 rounded-lg overflow-hidden my-6 shadow-xl">
-      <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center">
-        {!hasGame ? (
-          <div onClick={handleAdd} className="cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-20 h-20 stroke-white">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+      { loggedIn ? ( 
+        <> 
+          <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center">
+            {!hasGame ? (
+              <div onClick={handleAdd} className="cursor-pointer">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-20 h-20 stroke-white">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+            ) : (
+              <div className="cursor-pointer w-full h-full">
+                <img src={imageLink} alt="game" className="object-cover" />
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="cursor-pointer w-full h-full">
-            <img src={imageLink} alt="game" className="object-cover" />
+          <div className="flex w-full h-1/3 bg-dark-text text-white items-center">
+              <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
+                {catagoryName}
+              </div>
+              <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center Btn border-2 border-white rounded-3xl font-bold hover:bg-white hover:text-dark-text transition duration-100" onClick={() => handleAdd()}>
+                Change
+              </div>
           </div>
-        )}
-      </div>
-      <div className="w-full h-1/3 font-bold bg-dark-text text-white text-xl p-4">
-        {catagoryName}
-      </div>
+       </> ) : ( 
+        <>
+          <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center z-0">
+            <div className="cursor-pointer w-full h-full relative ">
+                  <img src={publicGameInfo.gameImageUrl} alt="game" className="object-cover " />
+                  <div class="opacity-0 hover:opacity-100 absolute inset-0 flex justify-center items-center z-20">{publicGameInfo.gameTitle}</div>
+            </div>
+          </div>
+          <div className="flex w-full h-1/3 bg-dark-text text-white items-center z-10">
+            <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
+                {catagoryName}
+            </div>
+            <div className="w-1/3 h-2/3 mt-3 mr-2 pt-2 items-center text-center content-center font-bold">
+              {publicGameInfo.count} votes
+            </div>
+          </div>
+            
+        </>
+        ) }
+      
+      
+      
+      {/* {loggedIn ? (
+        
+      ) : (
+        <div className="flex w-full h-1/3 bg-dark-text text-white">
+          <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
+            {catagoryName}
+          </div>
+        </div>
+      ) 
+      }*/}
+
+
     </div>
   );
 }
 
 export default Gamebox;
-
-// import React, { useState } from "react";
-
-// function Gamebox({ setShowSearch, setCatagoryName, catagoryName }) {
-//   const [hasGame, setHasGame] = useState(false); // whether this catagory already got a game added
-//   const [gameImage, setGameImage] = useState(""); // the image URL for the game, if hasGame is true
-
-//   function handleAdd() {
-//     // add a game
-//     // pass in current Catagory, then show search window
-//     setCatagoryName(catagoryName);
-//     setShowSearch(true);
-//   }
-
-//   function handleImageLoadError() {
-//     // if the game image fails to load, reset hasGame and gameImage
-//     setHasGame(false);
-//     setGameImage("");
-//   }
-
-//   return (
-//     <div className="flex flex-col w-80 h-52 rounded-lg overflow-hidden my-6 shadow-xl">
-//       <div className="flex w-full h-2/3 bg-dark-grey justify-center items-center">
-//         {hasGame ? (
-//           <img
-//             className="w-full h-2/3 object-cover"
-//             src={gameImage}
-//             alt={catagoryName}
-//             onError={handleImageLoadError}
-//           />
-//         ) : (
-//           <div onClick={handleAdd} className="cursor-pointer">
-//             <svg
-//               xmlns="http://www.w3.org/2000/svg"
-//               fill="none"
-//               viewBox="0 0 24 24"
-//               strokeWidth="1.5"
-//               stroke="currentColor"
-//               className="w-20 h-20 stroke-white"
-//             >
-//               <path
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//                 d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-//               />
-//             </svg>
-//           </div>
-//         )}
-//       </div>
-//       <div className="w-full h-1/3 font-bold bg-dark-text text-white text-xl p-4">
-//         {catagoryName}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Gamebox;
-

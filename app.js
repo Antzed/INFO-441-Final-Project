@@ -9,6 +9,7 @@ import {CLIENT_ID, TENANT_ID, CLIENT_SECRET} from './credentials.js'
 import models from './models.js'
 
 import apiRouter from './routes/api.js';
+import userRouter from './routes/user.js';
 
 const appSettings = {
     appCredentials: {
@@ -17,7 +18,7 @@ const appSettings = {
         clientSecret:  CLIENT_SECRET,
     },	
     authRoutes: {
-        redirect: "https://info441-gamedash.azurewebsites.net/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        redirect: "https://info441-gamedash.azurewebsites.net/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect""https://info-441-game-dash-backup.azurewebsites.net/redirect"
         error: "/error", // the wrapper will redirect to this route in case of any error.
         unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     }
@@ -39,7 +40,6 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'Frontend/build')));
 
-
 app.use(function(req, res, next) {
     req.models = models;
     next();
@@ -56,13 +56,20 @@ app.use(sessions({
 
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
 app.use(msid.initialize())
-  
+
+// app.get('/', async function(req, res, next) {
+//     // send frontend/build folder
+//     res.sendFile('index.html', { root: 'Frontend/build' });
+// });
 
 
 app.use('/api', apiRouter);
+app.use('/user', userRouter);
+
+
 
 app.get('/signin',
-    msid.signIn({postLoginRedirect: '/'})
+    msid.signIn({postLoginRedirect: '/user'})
 )
 
 app.get('/signout',
