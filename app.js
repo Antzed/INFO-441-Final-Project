@@ -12,6 +12,7 @@ import apiRouter from './routes/api.js';
 import userRouter from './routes/user.js';
 
 // const redirect = "https://info441-gamedash.azurewebsites.net/redirect";
+// const redirect = "https://info-441-game-dash-backup.azurewebsites.net/redirect";
 const redirect = "http://localhost:9000/redirect"
 
 const appSettings = {
@@ -21,7 +22,7 @@ const appSettings = {
         clientSecret:  CLIENT_SECRET,
     },	
     authRoutes: {
-        redirect: redirect, //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect""https://info-441-game-dash-backup.azurewebsites.net/redirect"
+        redirect: redirect, //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
         error: "/error", // the wrapper will redirect to this route in case of any error.
         unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     }
