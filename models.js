@@ -1,4 +1,3 @@
-import session from 'express-session';
 import mongoose from 'mongoose';
 
 import { MONGODB_USERNAME, MONGODB_PASSWORD } from './credentials.js';

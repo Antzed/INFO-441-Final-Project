@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-
-
 function Gamebox(props) {
   const [hasGame, setHasGame] = useState(false); // whether this catagory already got a game added
   const [imageLink, setImageLink] = useState(""); // the image link of the game
@@ -57,7 +55,7 @@ function Gamebox(props) {
 
   useEffect(() => {
     if (category !== undefined && !loggedIn) {
-      fetch("api/votes/count?categoryID=" + category._id)
+      fetch("api/votes/count?categoryID=" + encodeURIComponent(category._id))
         .then(res => res.json())
         .then(data => {
           console.log("public game data", data);
