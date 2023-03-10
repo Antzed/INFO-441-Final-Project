@@ -11,7 +11,6 @@ function Gamebox(props) {
   let catagoryName = props.catagoryName;
   let category = props.category;
   let loggedIn = props.loggedIn;
-  // const [addStatus, setAddStatus] = useState(false);
   function handleAdd() {
     // add a game
     // pass in current Catagory, then show search window
@@ -19,11 +18,8 @@ function Gamebox(props) {
       .then(res => res.json())
       .then(data => {
         if (data.status === "loggedin") {
-          console.log("catagoryName in handle add: " + catagoryName);
           setCatagoryName(catagoryName);
           setShowSearch(true);
-          //set add status to what it is not
-          // setAddStatus(!addStatus);
         } else {
           alert("Please login first");
         }
@@ -31,21 +27,16 @@ function Gamebox(props) {
   }
 
   // if imageLink is not empty, then show the image
-  // console.log("id", categoryID)
   useEffect(() => {
     if (category !== undefined) {
       fetch("api/users/vote")
         .then(res => res.json())
         .then(data => {
-          // find the vote with the same catagoryID
-          console.log("total votes", data);
 
           let vote = data.find(vote => vote.categoryID === category._id);
-          // console.log("vote", vote);
           if (vote) {
             setHasGame(true);
             setImageLink(vote.gameImageUrl);
-            // console.log("image", imageLink);
           } else {
             setHasGame(false);
           }
@@ -58,7 +49,6 @@ function Gamebox(props) {
       fetch("api/votes/count?categoryID=" + encodeURIComponent(category._id))
         .then(res => res.json())
         .then(data => {
-          console.log("public game data", data);
           setPublicGameInfo(data);
         })
     }
@@ -119,19 +109,6 @@ function Gamebox(props) {
             
         </>
         ) }
-      
-      
-      
-      {/* {loggedIn ? (
-        
-      ) : (
-        <div className="flex w-full h-1/3 bg-dark-text text-white">
-          <div className="w-2/3 font-bold text-xl m-3 flex justify-left items-center">
-            {catagoryName}
-          </div>
-        </div>
-      ) 
-      }*/}
 
 
     </div>

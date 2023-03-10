@@ -5,13 +5,9 @@ import GameSearch from "../components/GameSearch";
 //
 function Dashboard(props) {
   const [showSearch, setShowSearch] = useState(false);
-  console.log(showSearch);
   const [catagoryName, setCatagoryName] = useState("");
-  const [votes, setVotes] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [injectCatagory, setInjectCatagory] = useState(false);
 
-  console.log("catagoryName", catagoryName);
 
 
 
@@ -29,14 +25,12 @@ function Dashboard(props) {
     fetch("api/users/clear")
     .then(res => res.json())
     .then(data => {
-      console.log(data);
     })
     //reaload the page
     window.location.reload();
   }
 
   
-  console.log("catagoryIDs: ", categories)
 
 
   
@@ -71,7 +65,6 @@ function Dashboard(props) {
                 setShowSearch={setShowSearch}
                 setCatagoryName={setCatagoryName}
                 catagoryName={"Favorite game"}
-                //catagoryID = the element.id in the categoryIDs array that has the name "Favorite game" if it exists
                 category = {categories.find(element => element.name === "Favorite game")}
                 loggedIn={props.loggedIn}
               />

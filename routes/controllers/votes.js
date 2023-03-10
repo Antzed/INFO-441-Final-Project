@@ -25,28 +25,30 @@ router.get('/count', async function(req, res, next) {
     }
 });
 
-// returns number of votes for each category for an input game title
-router.get('/gameVoteCount', async function(req, res, next) {
-    try {
-        const gameTitle = req.query.gameTitle;
-        const gameVotes = await req.models.Vote.find({gameTitle: gameTitle});
+//This function is deprecated
+
+// returns number of votes for each category for an input game title. 
+// router.get('/gameVoteCount', async function(req, res, next) {
+//     try {
+//         const gameTitle = req.query.gameTitle;
+//         const gameVotes = await req.models.Vote.find({gameTitle: gameTitle});
     
-        let voteCount = [];
-        gameVotes.forEach(vote => {
-            let categoryIndex = voteCount.findIndex(cat => cat.categoryID === "" + vote.categoryID)
-            if (categoryIndex == -1) {
-                voteCount.push({categoryID: "" + vote.categoryID, count: 1});
-            } else {
-                voteCount[categoryIndex].count += 1;
-            }
-        });
+//         let voteCount = [];
+//         gameVotes.forEach(vote => {
+//             let categoryIndex = voteCount.findIndex(cat => cat.categoryID === "" + vote.categoryID)
+//             if (categoryIndex == -1) {
+//                 voteCount.push({categoryID: "" + vote.categoryID, count: 1});
+//             } else {
+//                 voteCount[categoryIndex].count += 1;
+//             }
+//         });
     
-        res.json(voteCount);
-    } catch(error) {
-        console.log("Error getting url preview: ", error);
-        res.status(500).json({status: "error", "error": error});
-    }
-});
+//         res.json(voteCount);
+//     } catch(error) {
+//         console.log("Error getting url preview: ", error);
+//         res.status(500).json({status: "error", "error": error});
+//     }
+// });
 
 
 export default router;

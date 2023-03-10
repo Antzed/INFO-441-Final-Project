@@ -16,7 +16,6 @@ function Game() {
         fetch(`api/games/data?search=${gameName}`) //doesn't work with spaces, and needs absolute path
         .then(res => res.json())
         .then(data => {
-            console.log("game page", data);
             JSON.stringify(data);
             setPublicGameInfo(data);
         })
@@ -28,10 +27,6 @@ function Game() {
         .then(data => {
             
             JSON.stringify(data);
-            console.log("count data", data);
-            console.log("count data", typeof data);
-            console.log(Object.keys(data))
-            console.log(Object.values(data))
             setVotes(data);
         })
         .catch(err => console.log(err))
@@ -41,7 +36,6 @@ function Game() {
     useEffect(() => {
       //create a function that search through the publicGameInfo and return the platform names
       if (Object.keys(publicGameInfo).length !== 0) {
-        console.log(publicGameInfo)
         for (let i = 0; i < publicGameInfo.platforms.length; i++) {
           //  check if the platform's name include "Pc", "Playstation" or Xbox", if so, set the checker to 1
           if (publicGameInfo.platforms[i].platform.name.includes("PC")) {
@@ -55,9 +49,6 @@ function Game() {
           }
         }
       }
-      console.log("pc", pcCheker)
-      console.log("ps", psChecker)
-      console.log("xbox", xboxChecker)
     }, [publicGameInfo])
 
     function Vote(props){
@@ -117,7 +108,6 @@ function Game() {
                       Votes
                     </h2>
                     <PrintVote votes={votes}/>
-                    {/* <p>{Object.keys(votes)}: {Object.values(votes)}</p> */}
                     <h2 className="text-white justify-start flex-grow mt-8">
                       Rating
                     </h2>
